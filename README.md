@@ -9,9 +9,9 @@ Requirements:
   - GCP API key --> for google maps feature
 
 Frontend stack:
-  - React --> https://beta.reactjs.org/
-  - Redux with Redux-saga --> https://redux-saga.js.org/
-  - Joy UI --> https://mui.com/joy-ui/getting-started/overview/
+  - [React](https://beta.reactjs.org/)
+  - Redux with [Redux-saga](https://redux-saga.js.org/)
+  - [Joy UI](https://mui.com/joy-ui/getting-started/overview/)
 
 Backend stack:
   - php
