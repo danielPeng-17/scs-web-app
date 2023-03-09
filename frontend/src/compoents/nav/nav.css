@@ -1,0 +1,9 @@
+a {
+    text-decoration: none;
+    padding: 16px 12px;
+    color: black;
+}
+
+a:active {
+    color: black;
+}
