@@ -1,5 +1,8 @@
 import React from "react";
 import { Nav } from "../../compoents/nav/Nav";
+import { Catalog } from "../../compoents/shop/Catalog";
+import Typography from '@mui/joy/Typography';
+import { padding } from "@mui/system";
 
 
 export const Home = () => {
@@ -7,7 +10,9 @@ export const Home = () => {
         <div>
             <Nav />
             <div>
-                this is home
+                <Typography 
+                    sx={{padding: '0.5em 0 0.5em 0.5em'}} level="display2">Electronics</Typography>
+                <Catalog></Catalog>
             </div>
         </div>
     );
