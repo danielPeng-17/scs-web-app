@@ -10,7 +10,6 @@ import BookmarkAdd from '@mui/icons-material/BookmarkAddOutlined';
 import { Link } from 'react-router-dom';
 
 export const ItemCard = ({item}) => {
-    console.log(item);
     return (
         <ListItem role="none">
             <Card variant="outlined" sx={{ width: 320 }}>
