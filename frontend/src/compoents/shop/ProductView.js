@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 
 export const ProductView = () => {
+    const [quantity, setQuantity] = useState(0);
+    
     let { productId } = useParams();
     let mockData = {
         productId: 2,
@@ -15,7 +17,7 @@ export const ProductView = () => {
         reviews: [],
         rating: 3
     }
-    
+
     useEffect(() => {
         // some api call to fetch the product based off productId
     }, []);
