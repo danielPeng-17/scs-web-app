@@ -11,6 +11,7 @@ import { Home } from './pages/home/Home';
 
 import './index.css';
 import { SignUp } from './pages/signUp/SignUp';
+import { ProductView } from './compoents/shop/ProductView';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -25,13 +26,15 @@ const router = createBrowserRouter([
   {
     path: "/signUp",
     element: <SignUp />
+  },
+  {
+    path: "/product/:productId",
+    element: <ProductView />
   }
 ]);
 
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
 );
