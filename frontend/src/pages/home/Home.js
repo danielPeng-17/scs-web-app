@@ -2,8 +2,6 @@ import React from "react";
 import { Nav } from "../../compoents/nav/Nav";
 import { Catalog } from "../../compoents/shop/Catalog";
 import Typography from '@mui/joy/Typography';
-import { padding } from "@mui/system";
-
 
 export const Home = () => {
     return (
