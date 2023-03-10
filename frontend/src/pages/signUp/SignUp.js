@@ -7,6 +7,8 @@ import Typography from '@mui/joy/Typography';
 import Button from '@mui/joy/Button';
 
 import { Nav } from '../../compoents/nav/Nav';
+import { useDispatch } from 'react-redux';
+import { signUpAction } from '../../auth/store/sliceReducer';
 
 const Status = Object.freeze({
     Initial: 'Initial',
@@ -16,6 +18,8 @@ const Status = Object.freeze({
 })
 
 export const SignUp = () => {
+    const dispatch = useDispatch();
+
     const [data, setData] = useState({
         email: '',
         password: '',
@@ -33,12 +37,7 @@ export const SignUp = () => {
         } else if (data.email === '' || data.password === '' || data.firstName === '' || data.lastName === '' || data.telNo === '' || data.address === '') {
             setData({...data, status: Status.MissingData});
         } else {
-            try {
-                // make dispatch call to sign new user up
-            } catch (e) {
-                console.log('Error', e);
-                setData({...data, status: Status.Fail});
-            }
+            dispatch(signUpAction(data));
         }
     }
 
