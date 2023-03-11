@@ -11,7 +11,7 @@ import { Home } from './pages/home/Home';
 
 import './index.css';
 import { SignUp } from './pages/signUp/SignUp';
-import { ProductView } from './compoents/shop/ProductView';
+import { ProductView } from './pages/shop/ProductView';
 import { SignIn } from './pages/signIn/SignIn';
 import { ShoppingCart } from './pages/shoppingCart/ShoppingCart';
 

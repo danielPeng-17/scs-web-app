@@ -1,6 +1,6 @@
 import React from "react";
-import { Nav } from "../../compoents/nav/Nav";
-import { Catalog } from "../../compoents/shop/Catalog";
+import { Nav } from "../../components/nav/Nav";
+import { Catalog } from "../../components/shopView/Catalog";
 import Typography from '@mui/joy/Typography';
 
 export const Home = () => {

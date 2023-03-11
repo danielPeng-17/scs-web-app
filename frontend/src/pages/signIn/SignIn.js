@@ -1,4 +1,4 @@
-import { Nav } from "../../compoents/nav/Nav";
+import { Nav } from "../../components/nav/Nav";
 import Sheet from '@mui/joy/Sheet';
 import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';

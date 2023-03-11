@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Nav } from '../../compoents/nav/Nav';
+import { Nav } from '../../components/nav/Nav';
 
 export const ShoppingCart = () => {
     const dispatch = useDispatch();

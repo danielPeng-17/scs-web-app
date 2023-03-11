@@ -6,7 +6,7 @@ import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 import Button from '@mui/joy/Button';
 
-import { Nav } from '../../compoents/nav/Nav';
+import { Nav } from '../../components/nav/Nav';
 import { useDispatch } from 'react-redux';
 import { signUpAction } from '../../auth/store/sliceReducer';
 
