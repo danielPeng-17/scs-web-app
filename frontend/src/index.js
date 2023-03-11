@@ -13,7 +13,7 @@ import './index.css';
 import { SignUp } from './pages/signUp/SignUp';
 import { ProductView } from './pages/shop/ProductView';
 import { SignIn } from './pages/signIn/SignIn';
-import { ShoppingCart } from './pages/shoppingCart/ShoppingCart';
+import { ShoppingCart } from './pages/shoppingCart/shoppingCart';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
