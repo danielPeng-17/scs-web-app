@@ -110,7 +110,7 @@ export const ProductView = () => {
                         <List orientation="vertical">
                             {product.reviews.map((reviewItem) => {
                                 return (
-                                <div >
+                                <div key={reviewItem.reviewId}>
                                     <Review reviewItem={reviewItem} /> 
                                     <Divider />
                                 </div>
