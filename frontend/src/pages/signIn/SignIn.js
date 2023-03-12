@@ -1,10 +1,10 @@
+import { useEffect, useState } from 'react';
 import { Nav } from "../../components/nav/Nav";
 import Sheet from '@mui/joy/Sheet';
 import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';
 import FormLabel from '@mui/joy/FormLabel';
 import Typography from '@mui/joy/Typography';
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInAction } from "../../auth/store/sliceReducer";
 import { useNavigate } from "react-router-dom";
@@ -19,13 +19,16 @@ export const SignIn = () => {
         password: ''
     })
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-
-        // if user is logged in, redirect to root page otherwise sign in
+    // if auth.isLoggedIn is true, redirect user to home page
+    useEffect(() => {
         if (state.isLoggedIn && state.loading === false) {
             navigate('/');
-        } else {
+        }
+    }, [state, navigate]);
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if (!state.isLoggedIn) {
             dispatch(signInAction(cred));
         }
     }
