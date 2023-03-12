@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { getCartAction } from "../../pages/shoppingCart/store/sliceReducer";
+// import { getCartAction } from "../../pages/shoppingCart/store/sliceReducer";
 import { postSignIn, postSignUp } from '../../services';
 import {
     signUpAction,
@@ -12,11 +12,13 @@ import {
 
 function* signUpSaga(action) {
     try {
+        console.log('in saga', action);
         const res = yield call(postSignUp, action.payload);
 
         if (res) {
             // TODO: res.data is not final backend response; update when backend is ready
             yield put(signUpSuccessAction(res.data));
+            console.log('in res', res);
         }
     } catch (e) {
         console.log('Error has occurred while signing up new user.');
@@ -31,9 +33,10 @@ function* signInSaga(action) {
         if (auth) {
             // TODO: res.data is not final backend response; update when backend is ready
             yield put(signInSuccessAction(auth.data));
+
             // fetch shopping cart data
-            const userId = auth.data.user.id; 
-            yield put(getCartAction(userId));
+            // const userId = auth.data.user.id; 
+            // yield put(getCartAction(userId));
         }
     } catch (e) {
         console.log('Error has occurred while signing in user.');
