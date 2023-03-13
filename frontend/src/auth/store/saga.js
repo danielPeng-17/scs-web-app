@@ -15,32 +15,34 @@ function* signUpSaga(action) {
         console.log('in saga', action);
         const res = yield call(postSignUp, action.payload);
 
-        if (res) {
+        if (res.data.isLoggedIn) {
             // TODO: res.data is not final backend response; update when backend is ready
             yield put(signUpSuccessAction(res.data));
             console.log('in res', res);
+        } else {
+            yield put(signUpFailAction());
         }
     } catch (e) {
-        console.log('Error has occurred while signing up new user.');
-        yield put(signUpFailAction());
+        console.log('Error has occurred while signing up new user: ', e.message);
     }
 };
 
 function* signInSaga(action) {
     try {
-        const auth = yield call(postSignIn, action.payload);
+        const res = yield call(postSignIn, action.payload);
 
-        if (auth) {
+        if (res.data.isLoggedIn) {
             // TODO: res.data is not final backend response; update when backend is ready
-            yield put(signInSuccessAction(auth.data));
+            yield put(signInSuccessAction(res.data));
 
             // fetch shopping cart data
-            // const userId = auth.data.user.id; 
+            // const userId = res.data.user.id; 
             // yield put(getCartAction(userId));
+        } else {
+            yield put(signInFailAction(res.data));
         }
     } catch (e) {
-        console.log('Error has occurred while signing in user.');
-        yield put(signInFailAction());
+        console.log('Error has occurred while signing in user:', e.message);
     }
 }
 

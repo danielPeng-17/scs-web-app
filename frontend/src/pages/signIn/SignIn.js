@@ -4,6 +4,7 @@ import Sheet from '@mui/joy/Sheet';
 import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';
 import FormLabel from '@mui/joy/FormLabel';
+import Alert from '@mui/joy/Alert';
 import Typography from '@mui/joy/Typography';
 import { useDispatch, useSelector } from "react-redux";
 import { signInAction } from "../../auth/store/sliceReducer";
@@ -13,6 +14,8 @@ export const SignIn = () => {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.auth);
     const navigate = useNavigate();
+
+    const logInErrors = state.logInErrors;
 
     const [cred, setCred] = useState({
         email: '',
@@ -32,6 +35,8 @@ export const SignIn = () => {
             dispatch(signInAction(cred));
         }
     }
+
+    const ErrorPill = ({ message }) => <Alert color="danger" sx={{ mb: 3 }}>{message}</Alert>;
 
     return (
         <>
@@ -58,6 +63,8 @@ export const SignIn = () => {
                 <form
                     onSubmit={(e) => onSubmit(e)}
                 >
+                    { logInErrors.length > 0 && logInErrors[0] === 'InvalidCreds' ? <ErrorPill message="Invalid credentials. Please try again." /> : null}
+                    { logInErrors.length > 0 && logInErrors[0] === 'MissingCreds' ? <ErrorPill message="Missing email or password." /> : null}
                     <FormLabel>Email</FormLabel>
                     <Input
                         placeholder="johndoe@email.com"
@@ -70,6 +77,7 @@ export const SignIn = () => {
                     <Input 
                         placeholder="password"
                         required
+                        type="password"
                         value={cred.password}
                         onChange={(e) => setCred({...cred, password: e.target.value})}
                         sx={{ mb: 1 }}

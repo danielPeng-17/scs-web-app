@@ -12,7 +12,9 @@ const Divider = () => <ListDivider sx={{ margin: 0 }} />
 
 export const Nav = () => {
 
-    
+    // TODO: if user is logged in, do not show the "Sign In" button.
+    // show user name and "log out" button instead. 
+
     return (
         <Box component="nav" sx={{ boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'}}>
             <List role="menubar" orientation="horizontal">

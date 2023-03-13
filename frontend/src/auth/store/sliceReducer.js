@@ -15,6 +15,7 @@ const initialState = {
         balance: 0
     },
     isLoggedIn: false,
+    logInErrors: [],
     loading: false
 }
 
@@ -46,19 +47,32 @@ const authSlice = createSlice({
         },
         signInAction: (draft, _payload) => {
             draft.loading = true;
+            draft.logInErrors = [];
         },
         signInSuccessAction: (draft, payload) => {
-            draft.user.id = payload.id;
-            draft.user.email = payload.email;
-            draft.user.firstName = payload.firstName;
-            draft.user.lastName = payload.lastName;
-            draft.user.telNo = payload.telNo;
-            draft.user.address = payload.address;
-            draft.isLoggedIn = true;
+            const { payload: data } = payload;
+
+            draft.user.id = data.id;
+            draft.user.email = data.email;
+            draft.user.firstName = data.firstName;
+            draft.user.lastName = data.lastName;
+            draft.user.telNo = data.telNo;
+            draft.user.address = data.address;
+            draft.user.city = data.city;
+            draft.user.province = data.province;
+            draft.user.country = data.country;
+            draft.user.postalCode = data.postalCode;
+            draft.isLoggedIn = data.isLoggedIn;
+            draft.logInErrors = [];
             draft.loading = false;
         },
-        signInFailAction: (draft, _payload) => {
-            draft = {...initialState};
+        signInFailAction: (draft, payload) => {
+            const { payload: data } = payload;
+
+            draft.user = {...initialState.user};
+            draft.isLoggedIn = data.isLoggedIn;
+            draft.logInErrors = data.logInErrors;
+            draft.loading = false;
         },
     }
 });
