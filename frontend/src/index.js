@@ -19,6 +19,7 @@ import { AboutUs } from './pages/aboutUs/AboutUs';
 import { TypesOfServices } from './pages/ToS/TypesOfServices';
 import { ContactUs } from './pages/contactUs/ContactUs';
 import { DBMaintain } from './pages/dbMaintain/DBMaintain';
+import { Checkout } from './pages/checkout/Checkout';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: '/DBM',
     element: <DBMaintain />
+  },
+  {
+    path: '/shoppingCart/checkout',
+    element: <Checkout />
   }
 ]);
 
