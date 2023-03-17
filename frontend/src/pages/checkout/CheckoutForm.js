@@ -12,20 +12,39 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInAction } from "../../auth/store/sliceReducer";
 import { useNavigate } from "react-router-dom";
+import { ShippingInfoForm } from './ShippingInfoForm';
+import { BillingAddressForm } from './BillingAddressForm';
+import { PaymentInfoForm } from './PaymentInfoForm';
 
 export const CheckoutForm = () => {
     const [page, setPage] = useState(0);
+    const [formData, setFormData] = useState({
+        shippingInfoFirstName: "",
+        shippingInfoLastName: "",
+        shippingAddress: "",
+        shippingPostalCode: "",
+        shippingCity: "",
+        shippingProvince: "",
+        shippingPhoneNumber: "",
+        billingFirstName: "",
+        billingLastName: "",
+        billingAddress: "",
+        billingPostalCode: "",
+        billingCity: "",
+        billingProvince: "",
+        billingPhoneNumber: "",
+      });
     const FormTitles = ["Shipping Address", "Billing Address", "Payment Information", "Review your order"]
 
     const PageDisplay = () => {
         if (page === 0) {
-        
+          return <ShippingInfoForm formData={formData} setFormData={setFormData} />;
         } else if (page === 1) {
-
-        } else if (page === 2) {
-            
+          return <BillingAddressForm formData={formData} setFormData={setFormData} />;
+        } else {
+          return <PaymentInfoForm formData={formData} setFormData={setFormData} />;
         }
-    }
+      };
     return (
         <>
             <Sheet
@@ -44,67 +63,29 @@ export const CheckoutForm = () => {
                 variant="outlined"
                 >
                 <Typography level="h4" component="h1">
-                    <b>Shipping Information</b>
+                    <b> {FormTitles[page]} </b>
                 </Typography>
-                <form
+                <div className="body">{PageDisplay()}</div>
+                <Button 
+                    disabled = {page == 0} sx={{ width: '45%', mr: 1}}
+                    onClick={() => {
+                        setPage((currPage) => currPage - 1);
+                      }}>
+                        Previous
+                </Button>
+                <Button
+                    sx = {{width: '45%'}}
+                    onClick={() => {
+                    if (page === FormTitles.length - 1) {
+                        console.log("FORM SUBMITTED");
+                        console.log(formData);
+                    } else {
+                        setPage((currPage) => currPage + 1);
+                    }
+                    }}
                 >
-                    <FormLabel> First Name </FormLabel>
-                    <Input
-                        placeholder="John"
-                        required
-                        sx={{mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
-                    />
-                    <FormLabel> Last Name </FormLabel>
-                    <Input
-                        placeholder="Doe"
-                        required
-                        sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
-                    />
-                    <FormLabel> Address </FormLabel>
-                    <Input
-                        placeholder="123 Fake Street"
-                        required
-                        sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
-                    />
-                    <FormLabel> Postal Code </FormLabel>
-                    <Input
-                        placeholder="ABC123"
-                        required
-                        sx={{mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
-                    />
-                    <FormLabel> City </FormLabel>
-                    <Input
-                        placeholder="Toronto"
-                        required
-                        sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
-                    />
-                    <FormLabel> Province </FormLabel>
-                    <Select
-                        placeholder="Select a province…"
-                        sx={{ width: 240 }}
-                        >
-                        <Option value="ON">ON</Option>
-                        <Option value="AB">AB</Option>
-                        <Option value="QC">QC</Option>
-                        <Option value="BC">BC</Option>
-                        <Option value="NS">NS</Option>
-                        <Option value="MB">MB</Option>
-                        <Option value="SK">SK</Option>
-                        <Option value="NB">NB</Option>
-                        <Option value="YT">YT</Option>
-                        <Option value="NT">NT</Option>
-                        <Option value="NU">NU</Option>
-    
-                    </Select>
-                    <br />
-                    <FormLabel> Phone Number </FormLabel>
-                    <Input
-                        placeholder="Phone Number"
-                        required
-                        sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
-                    />
-                    <Button type="submit" sx={{ width: '100%' }}>Enter</Button>
-                </form>
+                    {page === FormTitles.length - 1 ? "Submit" : "Next"}
+                </Button>
             </Sheet>
         </>
     );
