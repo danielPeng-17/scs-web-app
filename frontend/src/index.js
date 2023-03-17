@@ -15,6 +15,7 @@ import { ProductView } from './pages/shop/ProductView';
 import { SignIn } from './pages/signIn/SignIn';
 import { ShoppingCart } from './pages/shoppingCart/shoppingCart';
 import { AboutUs } from './pages/aboutUs/AboutUs';
+import { TypesOfServices } from './pages/ToS/TypesOfServices';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: '/aboutUs',
     element: <AboutUs />
+  },
+  {
+    path: '/ToS',
+    element: <TypesOfServices />
   }
 ]);
 
