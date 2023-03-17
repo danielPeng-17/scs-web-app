@@ -25,7 +25,7 @@ export const AboutUs = () => {
       <Box>
         <Nav />
         <Box sx={{ mx: 'auto', my: 5, maxWidth: 1200 }}>
-        <Typography variant="h3" sx={{ mb: 3, fontWeight: 'bold' }}>About Us</Typography>
+        <Typography variant="h3" sx={{ mb: 3, fontWeight: 'bold', backgroundColor: '#f8f8f8', padding: '20px' }}>About Us</Typography>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'stretch', flexWrap: 'wrap' }}>
             {teamMembers.map((member) => (
               <Box key={member.name} sx={{ mb: 5, width: { xs: '100%', sm: 'calc(50% - 16px)', md: 'calc(25% - 16px)' } }}>
