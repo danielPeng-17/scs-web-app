@@ -13,5 +13,6 @@ export const Home = () => {
                 <Catalog></Catalog>
             </div>
         </div>
+        
     );
 }
