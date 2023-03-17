@@ -14,6 +14,7 @@ import { SignUp } from './pages/signUp/SignUp';
 import { ProductView } from './pages/shop/ProductView';
 import { SignIn } from './pages/signIn/SignIn';
 import { ShoppingCart } from './pages/shoppingCart/shoppingCart';
+import { AboutUs } from './pages/aboutUs/AboutUs';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: '/cart',
     element: <ShoppingCart />
+  },
+  {
+    path: '/aboutUs',
+    element: <AboutUs />
   }
 ]);
 
