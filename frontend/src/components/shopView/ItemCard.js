@@ -13,7 +13,7 @@ export const ItemCard = ({item}) => {
     return (
         <ListItem role="none">
             <Card variant="outlined" sx={{ width: 320 }}>
-                <Link style={{padding: 0}} to={`/product/${item.productId}`}>
+                <Link style={{padding: 0}} to={`/product/${item.id}`}>
                     <Typography level="h2" fontSize="md" sx={{ mb: 0.5 }}>
                     {item.name}
                     </Typography>

@@ -22,6 +22,12 @@ export const getCart = async (payload) => {
 
 //fetch products
 export const getProducts = async () => {
-    const res = await axios.get(`${baseURL}/products.php`);
+    const res = await axios.get(`${baseURL}/products.php/products`);
+    return res;
+}
+
+//fetch single product
+export const getSingleProduct = async (id) => {
+    const res = await axios.get(`${baseURL}/products.php/view?id=${id}`);
     return res;
 }
