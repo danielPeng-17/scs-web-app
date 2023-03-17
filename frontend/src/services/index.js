@@ -19,3 +19,9 @@ export const getCart = async (payload) => {
     const res = await axios.post(`${baseURL}/shoppingCart.php`, payload);
     return res;
 }
+
+//fetch products
+export const getProducts = async () => {
+    const res = await axios.get(`${baseURL}/products.php`);
+    return res;
+}
