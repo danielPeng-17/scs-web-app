@@ -2,27 +2,25 @@
     padding: 2rem;
   }
   
-  .title {
+.title {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 1rem;
-  }
+}
   
-  .subtitle {
+.subtitle {
     font-size: 1.2rem;
     margin-bottom: 1rem;
-  }
+}
   
-  .services-list {
+.services-list {
     font-size: 1.1rem;
     list-style-type: none;
     margin-left: 0;
     padding-left: 0;
-  }
+}
   
-  .services-list li:before {
+.services-list li:before {
     content: "• ";
     color: #007bff;
-  }
-  
-  
+}

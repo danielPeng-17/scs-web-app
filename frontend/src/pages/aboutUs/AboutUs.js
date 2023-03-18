@@ -41,7 +41,3 @@ export const AboutUs = () => {
       </Box>
     );
   };
-  
-  
-  
-  

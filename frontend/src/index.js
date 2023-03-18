@@ -16,6 +16,7 @@ import { SignIn } from './pages/signIn/SignIn';
 import { ShoppingCart } from './pages/shoppingCart/shoppingCart';
 import { AboutUs } from './pages/aboutUs/AboutUs';
 import { TypesOfServices } from './pages/ToS/TypesOfServices';
+import { ContactUs } from './pages/contactUs/ContactUs';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: '/ToS',
     element: <TypesOfServices />
+  },
+  {
+    path: '/contactUs',
+    element: <ContactUs />
   }
 ]);
 
