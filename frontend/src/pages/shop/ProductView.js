@@ -25,7 +25,7 @@ export const ProductView = () => {
                 setProduct(data);
             });
         }
-    }, [product, setProduct]);
+    }, [product, setProduct, productId]);
 
     if (product) {
         return(

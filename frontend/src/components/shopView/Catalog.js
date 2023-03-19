@@ -7,7 +7,6 @@ import { IconButton } from '@mui/joy';
 import { ItemCard } from './ItemCard';
 import { useEffect, useState } from 'react';
 import { getProducts } from '../../services';
-import { dropInstance } from 'localforage';
 
 export const Catalog = () => {
   const [products, setProducts] = useState(null);
