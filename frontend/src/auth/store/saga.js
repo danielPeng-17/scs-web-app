@@ -23,7 +23,7 @@ function* signUpSaga(action) {
             yield put(signUpFailAction());
         }
     } catch (e) {
-        console.log('Error has occurred while signing up new user: ', e.message);
+        console.error('Error has occurred while signing up new user: ', e.message);
     }
 };
 
@@ -42,7 +42,7 @@ function* signInSaga(action) {
             yield put(signInFailAction(res.data));
         }
     } catch (e) {
-        console.log('Error has occurred while signing in user:', e.message);
+        console.error('Error has occurred while signing in user:', e.message);
     }
 }
 
