@@ -18,11 +18,15 @@ export const Catalog = () => {
   }
 
   const handleDrop = (e) => {
-
+    console.log(e.dataTransfer.getData("id"));
   }
 
   const handleDragOver = e => {
     e.preventDefault();
+  }
+  
+  const addToShoppingCart = () => {
+    
   }
 
   useEffect(() => {
@@ -54,7 +58,7 @@ export const Catalog = () => {
       </Box>
       <div 
         style={{ position: "fixed", bottom: "20px", right: "20px"}}
-        ondrop={e => handleDrop(e)}
+        onDrop={e => handleDrop(e)}
         onDragOver={e => handleDragOver(e)}
       >
         <IconButton color="neutral">
