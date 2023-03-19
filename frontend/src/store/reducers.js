@@ -11,9 +11,14 @@ const authPersistConfig = {
     storage: storage
 }
 
+const cartPersistConfig = {
+    key: 'cart',
+    storage: storage
+}
+
 const rootReducer = combineReducers({
     auth: persistReducer(authPersistConfig, authReducer),
-    cart: cartReducer,
+    cart: persistReducer(cartPersistConfig, cartReducer),
     dbm: dbmReducer
 });
 
