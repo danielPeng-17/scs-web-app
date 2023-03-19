@@ -12,40 +12,46 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInAction } from "../../auth/store/sliceReducer";
 import { useNavigate } from "react-router-dom";
+import { updateFormData } from './utils';
 
-export const PaymentInfoForm = () => {
+export const PaymentInfoForm = ({formData, setFormData}) => {
     return (
         <>
             <form
             >
                 <FormLabel> Card Number </FormLabel>
                 <Input
-                    placeholder="John"
+                    placeholder="XXXX-XXXX-XXXXX"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentNumber: e.target.value})}
                     sx={{mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> Expiration Date  </FormLabel>
                 <Input
-                    placeholder="Doe"
+                    placeholder="01/20"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentExpiration: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> CVV </FormLabel>
                 <Input
                     placeholder="1234"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentCVV: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> Postal Code </FormLabel>
                 <Input
-                    placeholder="1234"
+                    placeholder="ABC123"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentPostalCode: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />  
                 <FormLabel> Phone Number </FormLabel>
                 <Input
-                    placeholder="Phone Number"
+                    placeholder="416-416-4164"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentPhoneNumber: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
             </form>

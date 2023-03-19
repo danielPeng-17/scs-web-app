@@ -12,8 +12,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInAction } from "../../auth/store/sliceReducer";
 import { useNavigate } from "react-router-dom";
+import { updateFormData } from './utils';
 
-export const BillingAddressForm = () => {
+export const BillingAddressForm = ({formData, setFormData}) => {
     return (
         <>
             <form
@@ -22,36 +23,42 @@ export const BillingAddressForm = () => {
                 <Input
                     placeholder="John"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {billingFirstName: e.target.value})}
                     sx={{mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> Last Name </FormLabel>
                 <Input
                     placeholder="Doe"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {billingLastName: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> Address </FormLabel>
                 <Input
                     placeholder="123 Fake Street"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {billingAddress: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> Postal Code </FormLabel>
                 <Input
                     placeholder="ABC123"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {billingPostalCode: e.target.value})}
                     sx={{mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> City </FormLabel>
                 <Input
                     placeholder="Toronto"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {billingCity: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> Province </FormLabel>
                 <Select
                     placeholder="Select a province…"
                     sx={{ width: 240 }}
+                    onBlur={(e)=> updateFormData(formData, setFormData, {billingProvince: e.target.value})}
                     >
                     <Option value="ON">ON</Option>
                     <Option value="AB">AB</Option>
@@ -71,6 +78,7 @@ export const BillingAddressForm = () => {
                 <Input
                     placeholder="Phone Number"
                     required
+                    onBlur={(e)=> updateFormData(formData, setFormData, {billingPhoneNumber: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
             </form>

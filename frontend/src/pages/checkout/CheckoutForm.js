@@ -8,23 +8,27 @@ import Option from '@mui/joy/Option';
 import Chip from '@mui/joy/Chip';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import ListItem from '@mui/joy/ListItem';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInAction } from "../../auth/store/sliceReducer";
 import { useNavigate } from "react-router-dom";
 import { ShippingInfoForm } from './ShippingInfoForm';
 import { BillingAddressForm } from './BillingAddressForm';
 import { PaymentInfoForm } from './PaymentInfoForm';
+import { ReviewDetails } from './ReviewDetails';
+import { getLocation } from '../../services';
+
 
 export const CheckoutForm = () => {
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
-        shippingInfoFirstName: "",
-        shippingInfoLastName: "",
+        shippingFirstName: "",
+        shippingLastName: "",
         shippingAddress: "",
         shippingPostalCode: "",
         shippingCity: "",
         shippingProvince: "",
+        shippingCountry: "CA",
         shippingPhoneNumber: "",
         billingFirstName: "",
         billingLastName: "",
@@ -33,6 +37,11 @@ export const CheckoutForm = () => {
         billingCity: "",
         billingProvince: "",
         billingPhoneNumber: "",
+        paymentNumber: "",
+        paymentExpiration: "",
+        paymentCVV: "",
+        paymentPostalCode: "",
+        paymentPhoneNumber: "",
       });
     const FormTitles = ["Shipping Address", "Billing Address", "Payment Information", "Review your order"]
 
@@ -41,20 +50,24 @@ export const CheckoutForm = () => {
           return <ShippingInfoForm formData={formData} setFormData={setFormData} />;
         } else if (page === 1) {
           return <BillingAddressForm formData={formData} setFormData={setFormData} />;
-        } else {
+        } else if (page === 2){
           return <PaymentInfoForm formData={formData} setFormData={setFormData} />;
+        } else {
+            // add props to review details
+            return <ReviewDetails formData={formData} />
         }
       };
     return (
         <>
             <Sheet
                 sx={{
-                    width:'30%',
-                    ml: '20%',
-                    my: '4%',
+                    width:'50%',
+                    height: '89%',
+                    ml: '40%',
+                    mr: '0%',
                     py: 5,
                     px: 5,
-                    display: 'inline-block',
+                    display: 'flex',
                     flexDirection: 'column',
                     gap: 2,
                     borderRadius: 'sm',
@@ -66,16 +79,27 @@ export const CheckoutForm = () => {
                     <b> {FormTitles[page]} </b>
                 </Typography>
                 <div className="body">{PageDisplay()}</div>
+                <div style={{display: 'inline-flex', width: '100%'}}>
+                {page > 0 ? 
                 <Button 
-                    disabled = {page == 0} sx={{ width: '45%', mr: 1}}
+                    sx={{ width: '30%', mr: 1}}
                     onClick={() => {
                         setPage((currPage) => currPage - 1);
                       }}>
                         Previous
                 </Button>
+                : null}
                 <Button
-                    sx = {{width: '45%'}}
+                    sx = {{width: '30%'}}
                     onClick={() => {
+                    if (page === 0) {
+                        if(formData.shippingAddress !== ''){
+                            // make api call to geolocation api to fetch lat and long of address
+                            // call setlocation callback 
+                            // extract lat and longitude results.geometry.location.lng / lat, before callback
+                            // get location
+                        }      
+                    }
                     if (page === FormTitles.length - 1) {
                         console.log("FORM SUBMITTED");
                         console.log(formData);
@@ -84,8 +108,9 @@ export const CheckoutForm = () => {
                     }
                     }}
                 >
-                    {page === FormTitles.length - 1 ? "Submit" : "Next"}
+                    {page === FormTitles.length - 1 ? "Confirm" : "Next"}
                 </Button>
+                </div>
             </Sheet>
         </>
     );

@@ -14,12 +14,12 @@ export const OrderSummary = () => {
         <>
             <Sheet
                 sx={{
-                    width: '20%',
-                    ml: '2%',
+                    width: '34%',
+                    ml: '0%',
                     mt: '0%',
                     py: 5,
                     px: 5,
-                    display: 'inline-block',
+                    display: 'flex',
                     flexDirection: 'column',
                     gap: 2,
                     borderRadius: 'sm',
