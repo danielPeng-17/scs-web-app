@@ -35,9 +35,8 @@
             }
          }
 
-         // TODO: check db if user already exists
          if (!$isValuesNullOrEmptyString) {
-            $sql = "INSERT INTO scs.users (firstName, lastName, email, telNo, address, city, province, country, postalCode, password, balance) VALUES (:fn, :ln, :email, :tn, :addr, :city, :prov, :co, :pc, :pass, :bal);";
+            $sql = "INSERT INTO scs.users (firstName, lastName, email, telNo, address, city, province, country, postalCode, password, balance, isAdmin) VALUES (:fn, :ln, :email, :tn, :addr, :city, :prov, :co, :pc, :pass, :bal, :ia);";
             $statement = $pdo->prepare($sql);
             $statement->bindValue(":fn", $firstName);
             $statement->bindValue(":ln", $lastName);
@@ -50,9 +49,9 @@
             $statement->bindValue(":pc", $postalCode);
             $statement->bindValue(":pass", $password);
             $statement->bindValue(":bal", $balance);
+            $statement->bindValue(':ia', 0);
             $statement->execute();
             
-            // fetch id of new user -> id's are auto generated on db level
             $sql = "SELECT id FROM scs.users WHERE firstName='" . $firstName . "' AND lastName='" . $lastName . "' AND email='" . $email . "'";
             $result = $pdo->query($sql);
             $id = $result->fetch()["id"];
@@ -69,12 +68,14 @@
                "country" => $country,
                "postalCode" => $postalCode,
                "balance" => $balance,
-               "isLoggedIn" => true
+               "isLoggedIn" => true,
+               "isAdmin" => $isAdmin != 0 ? true : false
             );
             echo json_encode($res);
          } else {
             $res = array(
-               "isLoggedIn" => false
+               "isLoggedIn" => false,
+               "isAdmin" => false
             );
             echo json_encode($res);
          }

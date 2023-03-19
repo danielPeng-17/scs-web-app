@@ -45,13 +45,15 @@
                     "country" => $user["country"],
                     "postalCode" => $user["postalCode"],
                     "balance" => $user["balance"],
-                    "isLoggedIn" => true
+                    "isLoggedIn" => true,
+                    "isAdmin" => $user["isAdmin"] != 0 ? true : false
                 );
                 echo json_encode($res);
             } else {
                 // if email and password not found, return isLoggedIn = false
                 $res = array(
                     "isLoggedIn" => false,
+                    "isAdmin" => false,
                     "logInErrors" => array("InvalidCreds")
                  );
                  echo json_encode($res);
@@ -60,6 +62,7 @@
             // if email or password is null or empty string, return isLoggedIn = false
             $res = array(
                "isLoggedIn" => false,
+               "isAdmin" => false,
                "logInErrors" => array("MissingCreds")
             );
             echo json_encode($res);

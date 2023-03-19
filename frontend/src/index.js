@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { getStore } from './store';
+import { PersistGate } from 'redux-persist/integration/react'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -17,11 +18,12 @@ import { ShoppingCart } from './pages/shoppingCart/shoppingCart';
 import { AboutUs } from './pages/aboutUs/AboutUs';
 import { TypesOfServices } from './pages/ToS/TypesOfServices';
 import { ContactUs } from './pages/contactUs/ContactUs';
+import { DBMaintain } from './pages/dbMaintain/DBMaintain';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-const { store } = getStore();
+const { store, persistor } = getStore();
 
 const router = createBrowserRouter([
   {
@@ -55,11 +57,17 @@ const router = createBrowserRouter([
   {
     path: '/contactUs',
     element: <ContactUs />
+  },
+  {
+    path: '/DBM',
+    element: <DBMaintain />
   }
 ]);
 
 root.render(
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={router} />
+    </PersistGate>
   </Provider>
 );

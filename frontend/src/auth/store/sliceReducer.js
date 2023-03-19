@@ -15,6 +15,7 @@ const initialState = {
         balance: 0
     },
     isLoggedIn: false,
+    isAdmin: false,
     logInErrors: [],
     loading: false
 }
@@ -40,10 +41,14 @@ const authSlice = createSlice({
             draft.user.country = data.country;
             draft.user.postalCode = data.postalCode;
             draft.isLoggedIn = data.isLoggedIn;
+            draft.isAdmin = data.isAdmin;
             draft.loading = false;
         },
         signUpFailAction: (draft) => {
-            draft = {...initialState};
+            draft.user = {...initialState.user};
+            draft.isLoggedIn = false;
+            draft.isAdmin = false;
+            draft.logInErrors = [];
         },
         signInAction: (draft, _payload) => {
             draft.loading = true;
@@ -63,6 +68,7 @@ const authSlice = createSlice({
             draft.user.country = data.country;
             draft.user.postalCode = data.postalCode;
             draft.isLoggedIn = data.isLoggedIn;
+            draft.isAdmin = data.isAdmin;
             draft.logInErrors = [];
             draft.loading = false;
         },
@@ -71,9 +77,16 @@ const authSlice = createSlice({
 
             draft.user = {...initialState.user};
             draft.isLoggedIn = data.isLoggedIn;
+            draft.isAdmin = data.isAdmin;
             draft.logInErrors = data.logInErrors;
             draft.loading = false;
         },
+        logOutAction: (draft) => {
+            draft.user = {...initialState.user};
+            draft.isLoggedIn = false;
+            draft.isAdmin = false;
+            draft.logInErrors = [];
+        }
     }
 });
 
@@ -83,7 +96,8 @@ export const {
     signUpFailAction,
     signInAction,
     signInSuccessAction,
-    signInFailAction
+    signInFailAction,
+    logOutAction
 } = authSlice.actions;
 
 export default authSlice.reducer;
