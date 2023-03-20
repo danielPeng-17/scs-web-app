@@ -27,10 +27,25 @@
             } else {
                 throw new Exception("Missing parameter 'id'");
             }
+        } else if ($url_components['path'] == '/scs/products.php/shoppingCart') {
+            parse_str($_SERVER['QUERY_STRING'], $query);
+            $queryParams = $query['shoppingCart'];
+
+            $productIds = array();
+            foreach ($queryParams as $product) {
+                array_push($productIds, $product['id']);
+            }
+
+            $productId_list = implode(",", $productIds);
+            
+            $sql = "SELECT * FROM scs.products WHERE id IN ($productId_list)";
+            $result = $pdo->query($sql);
+            $data = $result->fetchAll(\PDO::FETCH_ASSOC);
+            echo json_encode($data);
         }
       }
    } catch (PDOException $e) {
-      die($e->getMessage());
-      echo "Error: " . $e->getMessage();
+        echo "Error: " . $e->getMessage();
+        die($e->getMessage());
    }
 ?>
