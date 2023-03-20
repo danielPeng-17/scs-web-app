@@ -13,9 +13,9 @@ export const ItemCard = ({item}) => {
     return (
         <ListItem role="none">
             <Card variant="outlined" sx={{ width: 320 }}>
-                <Link style={{padding: 0}} to={`/product/${item.productId}`}>
+                <Link style={{padding: 0}} to={`/product/${item.id}`} draggable="false">
                     <Typography level="h2" fontSize="md" sx={{ mb: 0.5 }}>
-                    {item.productName}
+                    {item.name}
                     </Typography>
                 </Link>
                 <Typography level="body2">Rating: {item.rating}</Typography>
@@ -28,8 +28,8 @@ export const ItemCard = ({item}) => {
                     <BookmarkAdd />
                 </IconButton>
                 <AspectRatio minHeight="120px" maxHeight="200px" sx={{ my: 2 }}>
-                <img
-                    src={item.imageUrl}
+                <img draggable="false"
+                    src={item.imageURL}
                     loading="lazy"
                     alt=""
                 />
