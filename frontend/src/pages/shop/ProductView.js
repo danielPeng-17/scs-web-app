@@ -4,6 +4,8 @@ import { Nav } from '../../components/nav/Nav';
 import { Divider, List, AspectRatio, Typography, Sheet, styled, Grid, Button, Box, Select, Option } from '@mui/joy';
 import { Review } from '../../components/shopView/Review';
 import { getSingleProduct } from '../../services';
+import { useDispatch } from "react-redux";
+import { addCartAction } from '../shoppingCart/store/sliceReducer';
 
 const Item = styled(Sheet)(({ theme }) => ({
     ...theme.typography.body2,
@@ -16,7 +18,17 @@ export const ProductView = () => {
     const [quantity, setQuantity] = useState(0);
     const [product, setProduct] = useState(null);
     
+    let dispatch = useDispatch();
     let { productId } = useParams();
+
+    const addToShoppingCart = () => {
+        let payload = {
+            id: productId,
+            quantity: quantity
+        }
+
+        dispatch(addCartAction(payload));
+    }
 
     useEffect(() => {
         if (product == null) {
@@ -51,10 +63,10 @@ export const ProductView = () => {
                                 <Typography level="body2">Brand: {product.brand}</Typography>
                                 <Typography level="body2">Seller: {product.seller}</Typography>
                                 <Typography level="h4">${product.price}</Typography>
-                                <Typography level="body1">{product.productDescription}</Typography>
+                                <Typography level="body1">{product.description}</Typography>
                             </div>
                             <div className='actions'>
-                                <Select defaultValue="1" sx={{maxWidth: '4em', mt: '1em' }}>
+                                <Select defaultValue="1" sx={{maxWidth: '4em', mt: '1em' }} onChange={(e, value) => setQuantity(value)}>
                                     <Option value="1">1</Option>
                                     <Option value="2">2</Option>
                                     <Option value="3">3</Option>
@@ -62,8 +74,7 @@ export const ProductView = () => {
                                     <Option value="5">5</Option>
                                 </Select>
                                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', paddingTop: '2em' }}>
-                                    <Button>Add to cart</Button>
-                                    <Button>Buy now</Button>
+                                    <Button onClick={() => addToShoppingCart()}>Add to cart</Button>
                                 </Box>
                             </div>
                         </Item>

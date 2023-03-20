@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { getProducts } from '../../services';
 import { useDispatch } from "react-redux";
 import { addCartAction } from '../../pages/shoppingCart/store/sliceReducer';
+import { Link } from "react-router-dom";
 
 export const Catalog = () => {
   const [products, setProducts] = useState(null);
@@ -43,7 +44,7 @@ export const Catalog = () => {
   }, [products, setProducts]);
 
   return(
-    <div style={{ position: "relative", minHeight: "100vh" }}>
+    <div style={{ position: "relative"}}>
       <Box sx={{ flexGrow: 1 }}>
         <List sx={{"--ListItem-paddingX": "14px", "--ListItem-paddingY": "12px"}} orientation="horizontal">
             {products && products.map((item) => {
@@ -65,11 +66,14 @@ export const Catalog = () => {
         onDrop={e => handleDrop(e)}
         onDragOver={e => handleDragOver(e)}
       >
-        <IconButton color="neutral">
-          <Badge badgeContent={shoppingCart ? shoppingCart.length : 0} sx={{padding: "1em"}}>
-            <Typography fontSize="2em">🛒</Typography>
-          </Badge>
-        </IconButton>
+        
+        <Link to={"/shoppingCart"}>
+          <IconButton color="neutral">
+            <Badge badgeContent={shoppingCart ? shoppingCart.length : 0} sx={{padding: "1em"}}>
+              <Typography fontSize="2em">🛒</Typography>
+            </Badge>
+          </IconButton>
+        </Link>
       </div>
     </div>
 
