@@ -94,6 +94,11 @@ export const Nav = () => {
                         <Link to={"/ToS"}>Types of Services</Link>
                     </ListItemButton>
                 </ListItem>
+                <ListItem>
+                    <ListItemButton>
+                        <Link to={"/shoppingCart/checkout"}>Checkout</Link>
+                    </ListItemButton>
+                </ListItem>
                 {isLoggedIn && isAdmin ? (
                     <>
                         <Divider />
