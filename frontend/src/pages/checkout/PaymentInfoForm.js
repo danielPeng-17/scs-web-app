@@ -23,7 +23,7 @@ export const PaymentInfoForm = ({formData, setFormData}) => {
                 <Input
                     placeholder="XXXX-XXXX-XXXXX"
                     required
-                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentNumber: e.target.value})}
+                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentCode: e.target.value})}
                     sx={{mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
                 <FormLabel> Expiration Date  </FormLabel>
@@ -40,19 +40,23 @@ export const PaymentInfoForm = ({formData, setFormData}) => {
                     onBlur={(e)=> updateFormData(formData, setFormData, {paymentCVV: e.target.value})}
                     sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
                 />
-                <FormLabel> Postal Code </FormLabel>
+                <br />
+                <hr />
+                <h2> Delivery Details </h2>
+                <FormLabel> Select your branch location </FormLabel>
+                <Select
+                    placeholder="Select a location"
+                    sx={{ width: 240 }}
+                    onBlur={(e)=> updateFormData(formData, setFormData, {shippingProvince: e.target.value})}
+                    >
+                    <Option value="Ryerson"> Ryerson </Option>
+                    <Option value="TMU"> TMU</Option>
+                </Select>
+                <FormLabel> Select your delivery date </FormLabel>
                 <Input
-                    placeholder="ABC123"
-                    required
-                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentPostalCode: e.target.value})}
-                    sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
-                />  
-                <FormLabel> Phone Number </FormLabel>
-                <Input
-                    placeholder="416-416-4164"
-                    required
-                    onBlur={(e)=> updateFormData(formData, setFormData, {paymentPhoneNumber: e.target.value})}
-                    sx={{ mb: 2, fontSize: 'var(--joy-fontSize-sm)' }}
+                    type="date"
+                    sx={{ width: 240 }}
+                    onBlur={(e)=> updateFormData(formData, setFormData, {dateReceived: e.target.value})}
                 />
             </form>
         </>

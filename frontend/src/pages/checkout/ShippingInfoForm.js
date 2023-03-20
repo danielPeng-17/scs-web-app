@@ -58,7 +58,7 @@ export const ShippingInfoForm = ({formData, setFormData}) => {
                 <Select
                     placeholder="Select a province…"
                     sx={{ width: 240 }}
-                    onBlur={(e)=> updateFormData(formData, setFormData, {shippingProvince: e.target.value})}
+                    onChange={(e, value)=> updateFormData(formData, setFormData, {shippingProvince: value})}
                     >
                     <Option value="ON">ON</Option>
                     <Option value="AB">AB</Option>

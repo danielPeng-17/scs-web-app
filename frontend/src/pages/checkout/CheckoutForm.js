@@ -3,11 +3,6 @@ import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';
 import FormLabel from '@mui/joy/FormLabel';
 import Typography from '@mui/joy/Typography';
-import Select from '@mui/joy/Select';
-import Option from '@mui/joy/Option';
-import Chip from '@mui/joy/Chip';
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import ListItem from '@mui/joy/ListItem';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signInAction } from "../../auth/store/sliceReducer";
@@ -17,9 +12,12 @@ import { BillingAddressForm } from './BillingAddressForm';
 import { PaymentInfoForm } from './PaymentInfoForm';
 import { ReviewDetails } from './ReviewDetails';
 import { getLocation } from '../../services';
-
+import { checkoutAction } from './store/sliceReducer';
 
 export const CheckoutForm = () => {
+    const state = useSelector((state) => state.auth);
+    const today = new Date();
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     const [page, setPage] = useState(0);
     const [formData, setFormData] = useState({
         shippingFirstName: "",
@@ -36,14 +34,23 @@ export const CheckoutForm = () => {
         billingPostalCode: "",
         billingCity: "",
         billingProvince: "",
+        billingCountry: "CA",
         billingPhoneNumber: "",
-        paymentNumber: "",
+        paymentCode: "",
         paymentExpiration: "",
         paymentCVV: "",
-        paymentPostalCode: "",
-        paymentPhoneNumber: "",
+        // required info
+        dateIssued: date,
+        dateReceived: "",
+        totalPrice: "",
+        userId: state.user.id,
+        tripId: "",
       });
     const FormTitles = ["Shipping Address", "Billing Address", "Payment Information", "Review your order"]
+    const dispatch = useDispatch();
+    const handleSubmit = () => {
+        dispatch(checkoutAction(formData));
+    };
 
     const PageDisplay = () => {
         if (page === 0) {
@@ -53,10 +60,9 @@ export const CheckoutForm = () => {
         } else if (page === 2){
           return <PaymentInfoForm formData={formData} setFormData={setFormData} />;
         } else {
-            // add props to review details
             return <ReviewDetails formData={formData} />
         }
-      };
+    };
     return (
         <>
             <Sheet
@@ -101,8 +107,11 @@ export const CheckoutForm = () => {
                         }      
                     }
                     if (page === FormTitles.length - 1) {
+                        // Button is confirm, run submit function and put into databse
+
                         console.log("FORM SUBMITTED");
                         console.log(formData);
+                        handleSubmit();
                     } else {
                         setPage((currPage) => currPage + 1);
                     }
