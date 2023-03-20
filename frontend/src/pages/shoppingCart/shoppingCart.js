@@ -43,7 +43,7 @@ export const ShoppingCart = () => {
                 </List>
             </Grid>
             <Grid container direction="row" sx={{ flexGrow: 1, paddingTop: '2em'}}>
-                <Typography level="h4">Total: {total} </Typography>
+                <Typography level="h4">Total: ${total} </Typography>
             </Grid>
             <Button sx={{mt: "2em" }} onClick={() => checkout()}>
                 Checkout
