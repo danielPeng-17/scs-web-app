@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 
 const baseURL = 'http://localhost:80/scs';
 
@@ -15,8 +16,9 @@ export const postSignIn = async (payload) => {
 }
 
 // fetch user's shopping cart
-export const getCart = async (payload) => {
-    const res = await axios.post(`${baseURL}/shoppingCart.php`, payload);
+export const getShoppingCart = async (payload) => {
+    const queryParams = qs.stringify({shoppingCart: payload});
+    const res = await axios.get(`${baseURL}/products.php/shoppingCart?${queryParams}`);
     return res;
 }
 
