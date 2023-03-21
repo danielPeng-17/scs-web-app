@@ -20,6 +20,7 @@ import { TypesOfServices } from './pages/ToS/TypesOfServices';
 import { ContactUs } from './pages/contactUs/ContactUs';
 import { DBMaintain } from './pages/dbMaintain/DBMaintain';
 import { Checkout } from './pages/checkout/Checkout';
+import { OrderConfirmation } from './pages/orderConfirmation/OrderConfirmation';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
   {
     path: '/shoppingCart/checkout',
     element: <Checkout />
+  },
+  {
+    path: '/orderConfirmation',
+    element: <OrderConfirmation />
   }
 ]);
 

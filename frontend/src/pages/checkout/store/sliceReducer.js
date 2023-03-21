@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    success: false,
     data: null,
+    errorMessage: null,
+    errorCode: null,
     loading: false
 };
 
@@ -12,13 +15,20 @@ const checkoutSlice = createSlice({
         checkoutAction: (draft, _payload) => {
             draft.loading = true;
         },
-        checkoutSuccessAction: (draft, payload) => {
+        checkoutSuccessAction: (draft, action) => {
+            const {sucess, ...data} = action.payload;
+
             draft.loading = false;
-            draft.data = payload.data;
+            draft.data = data;
+            draft.success = sucess;
+            draft.errorMessage = null;
+            draft.errorCode = null;
         },
-        checkoutFailAction: (draft) => {
+        checkoutFailAction: (draft, action) => {
             draft.loading = false;
             draft.data = null;
+            draft.errorMessage = action.payload.errorMessage;
+            draft.errorCode = action.payload.errorCode;
         },
     }
 });

@@ -8,13 +8,12 @@ import {
     ListItem,
     ListDivider,
     List,
-    Box
+    Box,
 } from "@mui/joy";
 
 import { logOutAction } from "../../auth/store/sliceReducer";
 import { Logo } from "../logo/Logo";
 import "./nav.css";
-
 
 const Divider = () => <ListDivider sx={{ margin: 0 }} />;
 
