@@ -33,3 +33,15 @@ export const getSingleProduct = async (id) => {
     const res = await axios.get(`${baseURL}/products.php/view?id=${id}`);
     return res;
 }
+
+// fetch geolocation
+export const getLocation = async (payload) => {
+    const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${payload.address}&key=${payload.apikey}`);
+    return res;
+}
+
+// new order
+export const postOrder = async (payload) => {
+    const res = await axios.post(`${baseURL}/orders.php`, payload);
+    return res;
+}

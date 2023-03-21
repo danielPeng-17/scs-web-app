@@ -8,13 +8,12 @@ import {
     ListItem,
     ListDivider,
     List,
-    Box
+    Box,
 } from "@mui/joy";
 
 import { logOutAction } from "../../auth/store/sliceReducer";
 import { Logo } from "../logo/Logo";
 import "./nav.css";
-
 
 const Divider = () => <ListDivider sx={{ margin: 0 }} />;
 
@@ -92,6 +91,11 @@ export const Nav = () => {
                 <ListItem>
                     <ListItemButton>
                         <Link to={"/ToS"}>Types of Services</Link>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem>
+                    <ListItemButton>
+                        <Link to={"/shoppingCart/checkout"}>Checkout</Link>
                     </ListItemButton>
                 </ListItem>
                 {isLoggedIn && isAdmin ? (
