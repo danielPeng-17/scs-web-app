@@ -1,136 +1,125 @@
-import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import {
-    Button,
-    Input,
-    ListItemButton,
-    ListItem,
-    ListDivider,
-    List,
-    Box,
-} from "@mui/joy";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Input, Box, Link as TextLink } from "@mui/joy";
+import { Search } from "@mui/icons-material";
 
-import { logOutAction } from "../../auth/store/sliceReducer";
 import { Logo } from "../logo/Logo";
 import "./nav.css";
-
-const Divider = () => <ListDivider sx={{ margin: 0 }} />;
+import { LoggedInMenu } from "./loggedInMenu/LoggedInMenu";
 
 export const Nav = () => {
-    // TODO: if user is logged in, do not show the "Sign In" button.
-    // show user name and "log out" button instead.
-    const dispatch = useDispatch();
     const state = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
-    const isAdmin = state.isAdmin;
     const isLoggedIn = state.isLoggedIn;
 
-    const logOut = () => {
-        dispatch(logOutAction());
-    };
+    const RoundedButton = ({ text, variant }) => (
+        <Button
+            variant={variant}
+            sx={{ borderRadius: "24px", px: 3, letterSpacing: "1px" }}
+        >
+            {text}
+        </Button>
+    );
 
-    const onSearch = () => {};
+    const StyledTextLink = ({ text, route }) => (
+        <TextLink
+            color="primary"
+            variant="plain"
+            sx={{
+                fontWeight: "bold",
+                height: "32px",
+                py: "4px",
+                mx: 1,
+                ":hover": { bgcolor: "white" },
+            }}
+            onClick={() => navigate(route)}
+        >
+            {text}
+        </TextLink>
+    );
+
+    const SearchBar = () => (
+        <div>
+            <Input
+                placeholder="Search"
+                sx={{
+                    borderRadius: "25px",
+                }}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        // TODO: on search function
+                    }
+                }}
+                endDecorator={
+                    <Button
+                        variant="outlined"
+                        color="neutral"
+                        sx={{ border: "none", borderRadius: "25px" }}
+                        // TODO: on search function
+                        onClick={() => {}}
+                    >
+                        <Search />
+                    </Button>
+                }
+            />
+        </div>
+    );
 
     return (
         <Box
-            component="nav"
-            sx={{ boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px" }}
+            sx={{
+                boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+                px: 3,
+                display: "flex",
+                justifyContent: "space-between",
+                letterSpacing: "1px",
+            }}
         >
-            <List role="menubar" orientation="horizontal">
-                <ListItem>
+            <div>
+                <Link to="/">
                     <Logo />
-                </ListItem>
-                <Divider />
-                <ListItem>
-                    <ListItemButton>
-                        <Link to={"/"}>Home</Link>
-                    </ListItemButton>
-                </ListItem>
-                <Divider />
-                <ListItem>
-                    <ListItemButton>
-                        <Link to={"/aboutUs"}>About Us</Link>
-                    </ListItemButton>
-                </ListItem>
-                <Divider />
-                <ListItem>
-                    <ListItemButton>
-                        <Link to={"/contactUs"}>Contact Us</Link>
-                    </ListItemButton>
-                </ListItem>
-                {!isLoggedIn ? (
-                    <>
-                        <Divider />
-                        <ListItem>
-                            <ListItemButton>
-                                <Link to={"/signUp"}>Sign Up</Link>
-                            </ListItemButton>
-                        </ListItem>
-                    </>
-                ) : null}
-                <Divider />
-                <ListItem>
-                    <ListItemButton>
-                        {!isLoggedIn ? (
-                            <Link to={"/signIn"}>Sign In</Link>
-                        ) : (
-                            <Link to={"/"} onClick={logOut}>
-                                Log out
+                </Link>
+            </div>
+            <div>
+                <div
+                    style={{
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <StyledTextLink text="Home" route="/" />
+                    <StyledTextLink text="About" route="/aboutUs" />
+                    <StyledTextLink text="Contacts" route="/contactUs" />
+                    <StyledTextLink text="Cart" route="/shoppingCart" />
+                    <StyledTextLink text="Services" route="/ToS" />
+                </div>
+            </div>
+
+            <div>
+                <div
+                    style={{
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    {!isLoggedIn ? (
+                        <>
+                            <StyledTextLink text="Login" route="/signIn" />
+
+                            <Link to="/signUp">
+                                <RoundedButton text="Signup" variant="solid" />
                             </Link>
-                        )}
-                    </ListItemButton>
-                </ListItem>
-                <Divider />
-                <ListItem>
-                    <ListItemButton>
-                        <Link to={"/shoppingCart"}>Shopping Cart</Link>
-                    </ListItemButton>
-                </ListItem>
-                <Divider />
-                <ListItem>
-                    <ListItemButton>
-                        <Link to={"/ToS"}>Types of Services</Link>
-                    </ListItemButton>
-                </ListItem>
-                <ListItem>
-                    <ListItemButton>
-                        <Link to={"/shoppingCart/checkout"}>Checkout</Link>
-                    </ListItemButton>
-                </ListItem>
-                {isLoggedIn && isAdmin ? (
-                    <>
-                        <Divider />
-                        <ListItem>
-                            <ListItemButton>
-                                <Link to={"/DBM"}>DB Maintain</Link>
-                            </ListItemButton>
-                        </ListItem>
-                    </>
-                ) : null}
-                {isLoggedIn ? (
-                    <>
-                        <Divider />
-                        <ListItem>
-                            <Input
-                                endDecorator={
-                                    <Button
-                                        variant="solid"
-                                        color="primary"
-                                        sx={{
-                                            borderTopLeftRadius: 0,
-                                            borderBottomLeftRadius: 0,
-                                        }}
-                                        onClick={() => onSearch()}
-                                    >
-                                        Search
-                                    </Button>
-                                }
-                            />
-                        </ListItem>
-                    </>
-                ) : null}
-            </List>
+                        </>
+                    ) : null}
+                    {isLoggedIn && <SearchBar />}
+                    {isLoggedIn && <LoggedInMenu />}
+                </div>
+            </div>
         </Box>
     );
 };

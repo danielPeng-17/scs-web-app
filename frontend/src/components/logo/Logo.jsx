@@ -1,9 +1,17 @@
 export const Logo = () => {
     return (
         <div>
-            <div style={{ display: 'inline-flex' }}>
-                <p style={{ fontFamily: 'Arimo', fontSize: '24px', margin: '0 4px'  }}>noz</p>
-  
+            <div style={{ display: "inline-flex" }}>
+                <p
+                    style={{
+                        fontFamily: "Arimo",
+                        fontSize: "24px",
+                        margin: "0 4px",
+                    }}
+                >
+                    noz
+                </p>
+
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0.33000001311302185 97.52999877929688 84.73999786376953"
@@ -16,7 +24,15 @@ export const Logo = () => {
                     ></path>
                 </svg>
 
-                <p style={{ fontFamily: 'Arimo', fontSize: '24px', margin: '0 4px' }}>ma</p>
+                <p
+                    style={{
+                        fontFamily: "Arimo",
+                        fontSize: "24px",
+                        margin: "0 4px",
+                    }}
+                >
+                    ma
+                </p>
             </div>
         </div>
     );
