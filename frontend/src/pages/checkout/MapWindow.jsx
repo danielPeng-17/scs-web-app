@@ -17,7 +17,7 @@ export default function MapWindow({ location }) {
         <div style={{ height: "22em", width: "22em", border: '2px solid black' }}>
             {/* <GoogleMapReact
                 bootstrapURLKeys={{
-                    key: "AIzaSyDk_PFeDts5f7OGOcBt0JkeU0pfnuYs8TA",
+                    key: "",
                 }}
                 defaultCenter={defaultProps.center}
                 defaultZoom={defaultProps.zoom}
