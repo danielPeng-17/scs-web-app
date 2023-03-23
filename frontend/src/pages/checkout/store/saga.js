@@ -28,10 +28,16 @@ function* checkoutSaga(action) {
         } else {
             const { errorMessage, errorCode } = res.data;
 
-            yield put(checkoutFailAction({ success, errorMessage, errorCode }));
+            yield put(
+                checkoutFailAction({
+                    success,
+                    errorMessage,
+                    errorCode,
+                })
+            );
         }
     } catch (e) {
-        console.error('Error has occurred:', e.message);
+        console.error("Error has occurred:", e.message);
     }
 }
 

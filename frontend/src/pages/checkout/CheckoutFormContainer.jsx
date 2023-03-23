@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography, Button, Sheet } from "@mui/joy";
 
@@ -9,6 +9,7 @@ import { CheckoutForm } from "./CheckoutAddressForm";
 import { CheckoutUserDetailsForm } from "./CheckoutUserDetailsForm";
 import { formTitles } from "./constants";
 import { useNavigate } from "react-router-dom";
+import { clearCartAction } from "../shoppingCart/store/sliceReducer";
 
 export const CheckoutFormContainer = () => {
     const dispatch = useDispatch();
@@ -139,6 +140,7 @@ export const CheckoutFormContainer = () => {
 
                             if (page === formTitlesSize - 1) {
                                 dispatch(checkoutAction(formData));
+                                dispatch(clearCartAction());
                                 navigate('/orderConfirmation');
                             } else {
                                 setPage(page + 1);
