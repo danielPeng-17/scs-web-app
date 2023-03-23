@@ -1,6 +1,9 @@
 import { Sheet, Typography } from "@mui/joy";
+import { useSelector } from "react-redux";
 
 export const OrderSummary = () => {
+    const state = useSelector((state) => state.cart);
+
     return (
         <>
             <Sheet
@@ -21,11 +24,14 @@ export const OrderSummary = () => {
                     <b>Order Summary</b>
                 </Typography>
                 <hr />
-                <p> Item Subtotal </p>
-                <p> Shipping Total </p>
+                <p>Item Subtotal</p>
+                <p>Shipping Total</p>
                 <hr />
-                <Typography level="h6" component="h1">
-                    <b>Total</b>
+                <Typography level="h5" component="h1">
+                    Total:{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                        ${state.totalPrice}
+                    </span>
                 </Typography>
             </Sheet>
         </>

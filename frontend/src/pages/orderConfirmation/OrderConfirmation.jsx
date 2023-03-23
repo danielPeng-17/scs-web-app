@@ -7,16 +7,18 @@ export const OrderConfirmation = () => {
     const state = useSelector((state) => state.checkout);
     const navigate = useNavigate();
 
-    const {success, orderId, totalPrice, dateReceived} = state.data;
+    console.log("in order confirmation", state);
+
+    const { success } = state;
 
     return (
         <Container name="Order Confirmation">
             {success ? (
                 <>
                     <p>Your order was a success!</p>
-                    <p>Your order id: {orderId}</p>
-                    <p>Total cost: {totalPrice}</p>
-                    <p>Shipment arrival date: {dateReceived}</p>
+                    <p>Your order id: {state.data.orderId}</p>
+                    <p>Total cost: {state.data.totalPrice}</p>
+                    <p>Shipment arrival date: {state.data.dateReceived}</p>
                 </>
             ) : (
                 <p>
@@ -24,9 +26,7 @@ export const OrderConfirmation = () => {
                     try again.
                 </p>
             )}
-            <Button onClick={() => navigate('/')}>
-                Back to shop!
-            </Button>
+            <Button onClick={() => navigate("/")}>Back to shop!</Button>
         </Container>
     );
 };

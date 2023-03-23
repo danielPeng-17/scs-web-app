@@ -4,3 +4,6 @@ export const formatPhoneNumber = (number) => {
 
     return match ? "(" + match[1] + ") " + match[2] + "-" + match[3] : null;
 };
+
+export const roundNumberToTwoDeciamls = (num) =>
+    Math.round((num + Number.EPSILON) * 100) / 100;

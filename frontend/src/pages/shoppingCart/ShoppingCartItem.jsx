@@ -1,46 +1,105 @@
-import ListItem from "@mui/joy/ListItem";
-import { AspectRatio, Typography, Sheet, styled, Grid } from "@mui/joy";
+import { useDispatch, useSelector } from "react-redux";
+import { AspectRatio, IconButton } from "@mui/joy";
+import { DeleteOutline, Remove, Add } from "@mui/icons-material";
+import {
+    removeCartItemAction,
+    updateCartItemAction,
+} from "./store/sliceReducer";
+import { roundNumberToTwoDeciamls } from "../../utils/utils";
 
-const Item = styled(Sheet)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "left",
-    color: theme.vars.palette.text.tertiary,
-}));
+export const ShoppingCartItem = ({ item }) => {
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.cart);
 
-export const ShoppingCartItem = ({ item, quantity }) => {
+    const itemIndex = state.items.findIndex(x => x.id === item.id);
+    const quantity = itemIndex > -1 ? state.items[itemIndex].quantity : 0;
+
+    const Label = ({ text, value }) => (
+        <p style={{ fontSize: "0.8em", margin: "4px auto" }}>
+            {text}: <span style={{ fontWeight: "600" }}>{value}</span>
+        </p>
+    );
+
+    const StyledIconButton = ({ children, onClick, disabled }) => (
+        <IconButton
+            variant="outlined"
+            color="neutral"
+            sx={{ borderRadius: "30px", p: 2 }}
+            disabled={disabled ? disabled : false}
+            onClick={onClick ? onClick : () => {}}
+        >
+            {children}
+        </IconButton>
+    );
+
     return (
-        <ListItem>
-            <Grid md={2}>
-                <Item>
-                    <AspectRatio objectFit="contain" sx={{ my: 2 }}>
+        <tr style={{ textAlign: "center" }}>
+            <td>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "start",
+                        alignItems: "center",
+                    }}
+                >
+                    <AspectRatio
+                        objectFit="contain"
+                        sx={{ my: 2, height: "100%", width: "256px" }}
+                    >
                         <img src={item.imageURL} loading="lazy" alt="" />
                     </AspectRatio>
-                </Item>
-            </Grid>
-            <Grid md={6}>
-                <Item>
-                    <div className="productInfo" style={{ paddingTop: "1em" }}>
-                        <Typography level="h3" sx={{ paddingBottom: "0.5em" }}>
-                            {item.name}
-                        </Typography>
-                        <Typography level="body1">
-                            {item.description}
-                        </Typography>
-                        <Typography level="body2">
-                            Brand: {item.brand}
-                        </Typography>
-                        <Typography level="body2">
-                            Seller: {item.seller}
-                        </Typography>
-                        <Typography level="body2">${item.price}</Typography>
-                        <Typography level="body2">
-                            Quantity: {quantity}
-                        </Typography>
+
+                    <div style={{ marginLeft: "1.75em", textAlign: "left" }}>
+                        <h3 style={{ fontWeight: "bold" }}>{item.name}</h3>
+                        <Label text="Brand" value={item.brand} />
+                        <Label text="Seller" value={item.seller} />
                     </div>
-                </Item>
-            </Grid>
-            <Grid md={4} />
-        </ListItem>
+                </div>
+            </td>
+            <td>
+                <div style={{ display: "inline-flex" }}>
+                    <StyledIconButton
+                        onClick={() =>
+                            dispatch(
+                                updateCartItemAction({
+                                    id: item.id,
+                                    quantity: quantity - 1,
+                                })
+                            )
+                        }
+                        disabled={quantity === 1}
+                    >
+                        <Remove />
+                    </StyledIconButton>
+                    <h3 style={{ margin: "auto 1em" }}>{quantity}</h3>
+                    <StyledIconButton
+                        onClick={() =>
+                            dispatch(
+                                updateCartItemAction({
+                                    id: item.id,
+                                    quantity: quantity + 1,
+                                })
+                            )
+                        }
+                    >
+                        <Add />
+                    </StyledIconButton>
+                </div>
+            </td>
+            <td>
+                <h3>{`$${roundNumberToTwoDeciamls(
+                    Number(item.price) * quantity
+                )}`}</h3>
+            </td>
+            <td>
+                <StyledIconButton
+                    onClick={() =>
+                        dispatch(removeCartItemAction({ id: item.id }))
+                    }
+                >
+                    <DeleteOutline sx={{ width: "1.25em", height: "1.25em" }} />
+                </StyledIconButton>
+            </td>
+        </tr>
     );
 };
