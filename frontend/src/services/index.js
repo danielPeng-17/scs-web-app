@@ -45,3 +45,10 @@ export const postOrder = async (payload) => {
     const res = await axios.post(`${baseURL}/orders.php`, payload);
     return res;
 }
+
+// fetch order
+export const getOrder = async (payload) => {
+    const res = await axios.get(`${baseURL}/orders.php`, { params: payload });
+    return res;
+}
+  

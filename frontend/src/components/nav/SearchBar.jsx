@@ -1,58 +1,54 @@
 import { useState } from "react";
-import { Input, Button } from "@mui/material";
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
 import { Search } from "@mui/icons-material";
 
-const SearchBar = () => {
-    const [searchQuery, setSearchQuery] = useState("");
+const SearchBar = ({ onSearch }) => {
+  const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [orderId, setOrderId] = useState("");
 
-    const onSearch = () => {
-        fetch("http://localhost:80/scs/orders.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ userid: searchQuery }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.exists) {
-                    alert("Order done");
-                } else {
-                    alert("Order does not exist");
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-    return (
-        <div>
-            <Input
-                placeholder="Search"
-                sx={{
-                    borderRadius: "25px",
-                }}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                        onSearch();
-                    }
-                }}
-                endDecorator={
-                    <Button
-                        variant="outlined"
-                        color="neutral"
-                        sx={{ border: "none", borderRadius: "25px" }}
-                        onClick={onSearch}
-                    >
-                        <Search />
-                    </Button>
-                }
-            />
-        </div>
-    );
+  const handleSearch = () => {
+    onSearch({ userId, orderId });
+    handleClose();
+  };
+
+  return (
+    <>
+      <Button startIcon={<Search />} onClick={handleOpen}>
+        Search
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Search Orders</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="User ID"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            label="Order ID"
+            value={orderId}
+            onChange={(e) => setOrderId(e.target.value)}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSearch} variant="contained" color="primary">
+            Search
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
 };
 
 export default SearchBar;
-
-
