@@ -1,8 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Input, Box, Link as TextLink } from "@mui/joy";
-import { Search } from "@mui/icons-material";
-
+import { Button, Box, Link as TextLink } from "@mui/joy";
+import SearchBar from "./SearchBar";
 import { Logo } from "../logo/Logo";
 import "./nav.css";
 import { LoggedInMenu } from "./loggedInMenu/LoggedInMenu";
@@ -38,33 +37,6 @@ export const Nav = () => {
         >
             {text}
         </TextLink>
-    );
-
-    const SearchBar = () => (
-        <div>
-            <Input
-                placeholder="Search"
-                sx={{
-                    borderRadius: "25px",
-                }}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                        // TODO: on search function
-                    }
-                }}
-                endDecorator={
-                    <Button
-                        variant="outlined"
-                        color="neutral"
-                        sx={{ border: "none", borderRadius: "25px" }}
-                        // TODO: on search function
-                        onClick={() => {}}
-                    >
-                        <Search />
-                    </Button>
-                }
-            />
-        </div>
     );
 
     return (
