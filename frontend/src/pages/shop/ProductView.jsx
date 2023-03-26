@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Nav } from "../../components/nav/Nav";
 import {
@@ -15,8 +15,8 @@ import {
     Option,
 } from "@mui/joy";
 import { Review } from "../../components/shopView/Review";
-import { getSingleProduct } from "../../services";
-import { useDispatch } from "react-redux";
+import { getReviews, getSingleProduct } from "../../services";
+import { useDispatch, useSelector } from "react-redux";
 import { addCartAction } from "../shoppingCart/store/sliceReducer";
 
 const Item = styled(Sheet)(({ theme }) => ({
@@ -29,9 +29,16 @@ const Item = styled(Sheet)(({ theme }) => ({
 export const ProductView = () => {
     const [quantity, setQuantity] = useState(0);
     const [product, setProduct] = useState(null);
+    const [reviews, setReviews] = useState(null);
+    const [avgRating, setAvgRating] = useState(0);
+
+    const state = useSelector((state) => state.auth);
+    const isLoggedIn = state.isLoggedIn;
+    const navigate = useNavigate();
 
     let dispatch = useDispatch();
     let { productId } = useParams();
+    
 
     const addToShoppingCart = () => {
         let payload = {
@@ -50,6 +57,19 @@ export const ProductView = () => {
             });
         }
     }, [product, setProduct, productId]);
+
+    useEffect(() => {
+        if (reviews == null) {
+            getReviews(productId).then((res) => {
+                if (res) {
+                    const data = res.data.rows;
+                    const avgData = res.data.avg_rating;
+                    setReviews(data);
+                    setAvgRating(Number(avgData).toFixed(1));
+                }
+            })
+        }
+    }, [reviews, setReviews, setAvgRating, productId])
 
     if (product) {
         return (
@@ -85,7 +105,7 @@ export const ProductView = () => {
                                     {product.name}
                                 </Typography>
                                 <Typography level="body1">
-                                    User Ratings: {product.rating}
+                                    User Ratings: {avgRating}
                                 </Typography>
                                 <Typography level="body2">
                                     Brand: {product.brand}
@@ -116,14 +136,15 @@ export const ProductView = () => {
                                     sx={{
                                         display: "flex",
                                         gap: 2,
-                                        flexWrap: "wrap",
+                                        flexDirection: "column",
                                         paddingTop: "2em",
                                     }}
-                                >
-                                    <Button onClick={() => addToShoppingCart()}>
-                                        Add to cart
-                                    </Button>
-                                </Box>
+                                    >
+                                    <Button sx={{maxWidth: "200px"}} onClick={() => addToShoppingCart()}>Add to cart</Button>
+                                    {isLoggedIn && (
+                                        <Button sx={{maxWidth: "200px", mt: "1em"}} onClick={() => navigate(`/reviewForm/${productId}`)}>Write a review</Button>
+                                    )}
+                                    </Box>
                             </div>
                         </Item>
                     </Grid>
@@ -132,16 +153,17 @@ export const ProductView = () => {
                     <Grid md />
                     <Grid md={10}>
                         <Item>
-                            <Typography level="h4">
-                                Customer Reviews:{" "}
-                                {product.reviews && product.reviews.length}
+                            <Typography level="h5">
+                                Total Reviews:{" "}
+                                {reviews && reviews.length}
+                                {reviews && reviews.length > 0 ? ` | Average Rating: ${avgRating}` : ''}
                             </Typography>
                             <Divider />
                             <List orientation="vertical">
-                                {product.reviews &&
-                                    product.reviews.map((reviewItem) => {
+                                {reviews &&
+                                    reviews.map((reviewItem) => {
                                         return (
-                                            <div key={reviewItem.reviewId}>
+                                            <div key={reviewItem.id}>
                                                 <Review
                                                     reviewItem={reviewItem}
                                                 />
