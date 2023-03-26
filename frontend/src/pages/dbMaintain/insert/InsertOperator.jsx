@@ -20,6 +20,7 @@ export const InsertOperator = ({
                     }}
                 >
                     <Option value="users">Users</Option>
+                    <Option value="truck">Truck</Option>
                 </Select>
                 <p style={{ margin: "auto 16px" }}>{"("}</p>
                 <Input
