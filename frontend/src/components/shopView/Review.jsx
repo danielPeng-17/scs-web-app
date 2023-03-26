@@ -7,10 +7,10 @@ export const Review = ({ reviewItem }) => {
     return(
         <ListItem>
             <Box>
-            <Typography level="h6">{reviewItem.username}</Typography>
-            <Typography level="h6">{reviewItem.title} | {' '} Rating: {reviewItem.score}</Typography>
+            <Typography level="h6">{reviewItem.name}</Typography>
+            <Typography level="h6">{reviewItem.headline} | {' '} Rating: {reviewItem.rating}</Typography>
             <Typography level="body2" pb={ '1em' }>Date: {reviewItem.date}</Typography>
-            <Typography levl="body1">{reviewItem.reviewContent}</Typography>
+            <Typography levl="body1">{reviewItem.content}</Typography>
             </Box>
         </ListItem>
     );

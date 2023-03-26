@@ -21,6 +21,7 @@ import { ContactUs } from './pages/contactUs/ContactUs';
 import { DBMaintain } from './pages/dbMaintain/DBMaintain';
 import { Checkout } from './pages/checkout/Checkout';
 import { OrderConfirmation } from './pages/orderConfirmation/OrderConfirmation';
+import { ReviewForm } from './pages/shop/ReviewForm';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
   {
     path: '/orderConfirmation',
     element: <OrderConfirmation />
+  },
+  {
+    path: "/reviewForm/:productId",
+    element: <ReviewForm />
   }
 ]);
 

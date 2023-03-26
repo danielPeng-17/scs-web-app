@@ -34,6 +34,17 @@ export const getSingleProduct = async (id) => {
     return res;
 }
 
+//fetch reviews
+export const getReviews = async (id) => {
+    const res = await axios.get(`${baseURL}/products.php/reviews?id=${id}`);
+    return res;
+}
+
+export const addReview = async (payload) => {
+    const res = await axios.post(`${baseURL}/products.php/addReview`, payload);
+    return res;
+}
+
 // fetch geolocation
 export const getLocation = async (payload) => {
     const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${payload.address}&key=${payload.apikey}`);
