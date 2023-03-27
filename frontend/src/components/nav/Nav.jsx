@@ -68,7 +68,6 @@ export const Nav = () => {
                     <StyledTextLink text="Contacts" route="/contactUs" />
                     <StyledTextLink text="Cart" route="/shoppingCart" />
                     <StyledTextLink text="Services" route="/ToS" />
-                    <BrowserInfo />
                 </div>
             </div>
 
@@ -94,6 +93,7 @@ export const Nav = () => {
                     {isLoggedIn && <LoggedInMenu />}
                 </div>
             </div>
+            <BrowserInfo />
         </Box>
     );
 };

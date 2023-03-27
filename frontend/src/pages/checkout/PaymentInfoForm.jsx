@@ -7,12 +7,14 @@ import {
     Typography,
 } from "@mui/joy";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { updateFormData } from "./utils";
 
 export const PaymentInfoForm = ({ formData, setFormData }) => {
+    const state = useSelector((state) => state.checkout);
+    const truckData = state.trucks;
     const expSplit = formData.paymentData.cardExp.split("/");
-
     const [exp, setExp] = useState(`${expSplit[0] ?? ""}/${expSplit[1] ?? ""}`);
 
     useEffect(() => {
@@ -114,14 +116,25 @@ export const PaymentInfoForm = ({ formData, setFormData }) => {
                         <Select
                             placeholder="Select an option"
                             defaultValue={formData.branchSource}
-                            onChange={(_, newValue) =>
-                                updateFormData(setFormData, null, {
-                                    branchSource: newValue,
-                                })
-                            }
+                            onChange={(_, newValue) => {
+                                const truck = truckData.find(
+                                    (truck) => truck.id === newValue
+                                );
+
+                                if (truck) {
+                                    updateFormData(setFormData, null, {
+                                        branchSource: truck.truckLocation,
+                                        shippingFee: truck.shippingFee
+                                    });
+                                }
+                            }}
                         >
-                            <Option value="Ryerson">Ryerson</Option>
-                            <Option value="TMU">TMU</Option>
+                            {truckData &&
+                                truckData.map((truck) => (
+                                    <Option value={truck.id} key={truck.id}>
+                                        {truck.truckLocation}
+                                    </Option>
+                                ))}
                         </Select>
                     </div>
 

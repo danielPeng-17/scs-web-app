@@ -52,9 +52,11 @@
             $statement->bindValue(':ia', 0);
             $statement->execute();
             
-            $sql = "SELECT id FROM scs.users WHERE firstName='" . $firstName . "' AND lastName='" . $lastName . "' AND email='" . $email . "'";
+            $sql = "SELECT id, isAdmin FROM scs.users WHERE firstName='" . $firstName . "' AND lastName='" . $lastName . "' AND email='" . $email . "'";
             $result = $pdo->query($sql);
-            $id = $result->fetch()["id"];
+            $row = $result->fetch();
+            $id = $row["id"];
+            $isAdmin = $row["isAdmin"];
 
             $res = array(
                "id" => $id,

@@ -34,6 +34,11 @@ export const SelectOperator = ({
                     }}
                 >
                     <Option value="users">Users</Option>
+                    <Option value="products">Product</Option>
+                    <Option value="orders">Orders</Option>
+                    <Option value="payment">Payment</Option>
+                    <Option value="trip">Trip</Option>
+                    <Option value="truck">Truck</Option>
                 </Select>
             </div>
             <div>

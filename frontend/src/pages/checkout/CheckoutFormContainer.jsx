@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Typography, Button, Sheet } from "@mui/joy";
 
 import { PaymentInfoForm } from "./PaymentInfoForm";
@@ -11,54 +11,10 @@ import { formTitles } from "./constants";
 import { useNavigate } from "react-router-dom";
 import { clearCartAction } from "../shoppingCart/store/sliceReducer";
 
-export const CheckoutFormContainer = () => {
+export const CheckoutFormContainer = ({ formData, setFormData }) => {
     const dispatch = useDispatch();
-    const state = useSelector((state) => state.auth);
     const navigate = useNavigate();
-
-    const user = state.isLoggedIn ? state.user : null;
-
-    const today = new Date();
-    const date = `${today.getFullYear()}-${
-        today.getMonth() + 1
-    }-${today.getDate()}`;
-
     const [page, setPage] = useState(0);
-
-    const [formData, setFormData] = useState({
-        user: {
-            firstName: user ? user.firstName : "",
-            lastName: user ? user.lastName : "",
-            telNo: user ? user.telNo : "",
-        },
-        shipping: {
-            address: user ? user.address : "",
-            postalCode: user ? user.postalCode : "",
-            city: user ? user.city : "",
-            province: user ? user.province : "",
-            country: user ? user.country : "CA",
-        },
-        billing: {
-            address: "",
-            postalCode: "",
-            city: "",
-            province: "",
-            country: "CA",
-        },
-        paymentData: {
-            cardNo: "",
-            cardName: "",
-            cardExp: "",
-            cardCVV: "",
-        },
-        isBillingSameAsShipping: false,
-        dateIssued: date,
-        dateReceived: "",
-        branchSource: "",
-        totalPrice: 0,
-        userId: user ? user.id : null,
-        tripId: ""
-    });
 
     const formTitlesSize = Object.keys(formTitles).length;
 
@@ -119,6 +75,12 @@ export const CheckoutFormContainer = () => {
                         <Button
                             sx={{ width: "50%", mr: 1 }}
                             onClick={() => {
+                                if (page === 3) {
+                                    setFormData({
+                                        ...formData,
+                                        shippingFee: 0,
+                                    });
+                                }
                                 setPage(page - 1);
                             }}
                         >
@@ -141,7 +103,7 @@ export const CheckoutFormContainer = () => {
                             if (page === formTitlesSize - 1) {
                                 dispatch(checkoutAction(formData));
                                 dispatch(clearCartAction());
-                                navigate('/orderConfirmation');
+                                navigate("/orderConfirmation");
                             } else {
                                 setPage(page + 1);
                             }
