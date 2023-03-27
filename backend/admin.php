@@ -25,6 +25,14 @@
             $result = $pdo->query($query);
             http_response_code(200);
             echo json_encode(['success' => true, 'response' => 'Your insert request was successful.']);
+        } else if ($type == 'update') {
+            $result = $pdo->query($query);
+            http_response_code(200);
+            echo json_encode(['success' => true, 'response' => 'Your update request was successful.']);
+        } else if ($type == 'delete') {
+            $result = $pdo->query($query);
+            http_response_code(200);
+            echo json_encode(['success' => true, 'response' => 'Your delete request was successful.']);
         }
     }
    } catch (PDOException $e) {
