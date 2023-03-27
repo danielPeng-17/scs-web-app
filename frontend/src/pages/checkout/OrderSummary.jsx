@@ -34,7 +34,9 @@ export const OrderSummary = ({ formData, setFormData }) => {
     );
 
     useEffect(() => {
-        setFormData({ ...formData, totalPrice: total });
+        if (formData.totalPrice !== total) {
+            setFormData({ ...formData, totalPrice: total });
+        }
     }, [formData, setFormData, total]);
 
     const validateDiscount = () => {
