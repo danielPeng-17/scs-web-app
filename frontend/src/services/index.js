@@ -49,7 +49,7 @@ export const postOrder = async (payload) => {
 // fetch order -> orderId & userId
 export const getOrder = async (payload) => {
     const { id, userId } = payload;
-    const res = await axios.get(`${baseURL}/orders.php?id=${id}&userId=${userId}`);
+    const res = await axios.get(`${baseURL}/searchBar.php?id=${id}&userId=${userId}`);
     return res;
 };
   

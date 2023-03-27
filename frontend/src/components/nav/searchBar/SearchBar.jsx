@@ -18,6 +18,7 @@ const SearchBar = ({ onSearch }) => {
           const result = await getOrder({ userId, id });
           setOrder(result);
         } catch (error) {
+          // If there is an error while fetching the order, log the error to the console and display an error message to the user
           console.log("Error fetching order:", error);
           setError("Failed to fetch order. Please try again.");
         }
