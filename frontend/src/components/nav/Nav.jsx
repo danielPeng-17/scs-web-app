@@ -4,7 +4,7 @@ import { Button, Box, Link as TextLink } from "@mui/joy";
 import { Logo } from "../logo/Logo";
 import "./nav.css";
 import { LoggedInMenu } from "./loggedInMenu/LoggedInMenu";
-import BrowserInfo from "./browserDetect/BrowserInfo";
+import BrowserInfo from "../browserDetect/BrowserInfo";
 import SearchBar from "./searchBar/SearchBar";
 
 export const Nav = () => {
