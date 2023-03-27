@@ -70,8 +70,16 @@ export const postAdminQuery = async (payload) => {
     const res = await axios.post(`${baseURL}/admin.php`, payload);
     return res;
 }
+
 // fetch truck data
 export const getTruck = async () => {
     const res = await axios.get(`${baseURL}/truck.php`);
     return res;
 } 
+
+// fetch order -> orderId & userId
+export const getOrder = async (payload) => {
+    const { id, userId } = payload;
+    const res = await axios.get(`${baseURL}/searchBar.php?id=${id}&userId=${userId}`);
+    return res;
+};
