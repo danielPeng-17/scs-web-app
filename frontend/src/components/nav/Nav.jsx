@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Box, Link as TextLink } from "@mui/joy";
-import SearchBar from "./SearchBar";
 import { Logo } from "../logo/Logo";
 import "./nav.css";
 import { LoggedInMenu } from "./loggedInMenu/LoggedInMenu";
 import BrowserInfo from "./browserDetect/BrowserInfo";
+import SearchBar from "./searchBar/SearchBar";
 
 export const Nav = () => {
     const state = useSelector((state) => state.auth);
