@@ -5,9 +5,7 @@ import { queryAction, queryFailAction, querySuccessAction } from "./sliceReducer
 function* querySaga(action) {
     try {
         const res = yield call(postAdminQuery, action.payload);
-        console.log(res);
         if (res.data.success) {
-            console.log("kasdasdfa");
             yield put(querySuccessAction(res.data.response));
         } else {
             yield put(queryFailAction());

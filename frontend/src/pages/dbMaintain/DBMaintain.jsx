@@ -38,8 +38,6 @@ export const DBMaintain = () => {
             query = "";
         }
         if (query !== "") {
-            console.log("not blank");
-            console.log(query);
             dispatch(queryAction({query, type: operator}));
         }
     };

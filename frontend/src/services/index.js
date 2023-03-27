@@ -56,6 +56,5 @@ export const postOrder = async (payload) => {
 
 export const postAdminQuery = async (payload) => {
     const res = await axios.post(`${baseURL}/admin.php`, payload);
-    console.log("postadmin");
     return res;
 }

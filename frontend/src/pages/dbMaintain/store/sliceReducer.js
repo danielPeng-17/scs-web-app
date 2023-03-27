@@ -13,7 +13,6 @@ const DBMSlice = createSlice({
             draft.loading = true;
         },
         querySuccessAction: (draft, action) => {
-            console.log(action);
             draft.response = action.payload;
             draft.loading = false;
         },
