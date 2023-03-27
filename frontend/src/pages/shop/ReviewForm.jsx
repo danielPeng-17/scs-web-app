@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Input, FormLabel, Textarea, Button, Select, Option, FormControl, Grid, Typography, Divider, Box, Alert, IconButton } from "@mui/joy";
@@ -32,7 +32,7 @@ export const ReviewForm = () => {
     
             addReview(payload)
                 .then((res) => {
-                    if (res.success == false) {
+                    if (res.success === false) {
                         throw new Error(res.statusText);
                     }
                     setReviewComplete(true);

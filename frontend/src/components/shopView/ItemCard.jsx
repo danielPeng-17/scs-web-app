@@ -7,12 +7,13 @@ import Typography from "@mui/joy/Typography";
 import ListItem from "@mui/joy/ListItem";
 import { Link } from "react-router-dom";
 import { addCartAction } from "../../pages/shoppingCart/store/sliceReducer";
+import { setToast } from "../container/store/sliceReducer";
 
 export const ItemCard = ({ item }) => {
     const dispatch = useDispatch();
 
     return (
-        <ListItem role="none">
+        <ListItem role="none" sx={{ pl: 0, pr: 3 }}>
             <Card variant="outlined" sx={{ width: 320 }}>
                 <Link
                     style={{ padding: 0 }}
@@ -51,6 +52,7 @@ export const ItemCard = ({ item }) => {
                                     quantity: 1,
                                 })
                             );
+                            dispatch(setToast(true));
                         }}
                     >
                         Add to Cart

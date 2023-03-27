@@ -3,8 +3,11 @@ import {
     checkoutAction,
     checkoutFailAction,
     checkoutSuccessAction,
+    fetchTruckAction,
+    fetchTruckFailAction,
+    fetchTruckSuccessAction,
 } from "./sliceReducer";
-import { postOrder } from "../../../services";
+import { getTruck, postOrder } from "../../../services";
 
 function* checkoutSaga(action) {
     try {
@@ -15,16 +18,7 @@ function* checkoutSaga(action) {
         const { success } = res.data;
 
         if (success) {
-            const { orderId, dateReceived, totalPrice } = res.data;
-
-            yield put(
-                checkoutSuccessAction({
-                    success,
-                    orderId,
-                    dateReceived,
-                    totalPrice,
-                })
-            );
+            yield put(checkoutSuccessAction(res.data));
         } else {
             const { errorMessage, errorCode } = res.data;
 
@@ -41,6 +35,23 @@ function* checkoutSaga(action) {
     }
 }
 
+function* fetchTruckSaga(action) {
+    try {
+        const res = yield call(getTruck);
+
+        if (res.data.success) {
+            yield put(fetchTruckSuccessAction(res.data.trucks));
+        } else {
+            yield put(fetchTruckFailAction());
+        }
+    } catch (e) {
+        console.error("Error has occurred:", e.message);
+    }
+}
+
 export function* orderSaga() {
-    yield all([takeLatest(checkoutAction.type, checkoutSaga)]);
+    yield all([
+        takeLatest(checkoutAction.type, checkoutSaga),
+        takeLatest(fetchTruckAction.type, fetchTruckSaga),
+    ]);
 }

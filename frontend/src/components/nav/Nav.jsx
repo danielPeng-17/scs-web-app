@@ -6,7 +6,7 @@ import { Search } from "@mui/icons-material";
 import { Logo } from "../logo/Logo";
 import "./nav.css";
 import { LoggedInMenu } from "./loggedInMenu/LoggedInMenu";
-import BrowserInfo from "./browserDetect/BrowserInfo";
+import BrowserInfo from "../browserDetect/BrowserInfo";
 
 export const Nav = () => {
     const state = useSelector((state) => state.auth);
@@ -96,7 +96,6 @@ export const Nav = () => {
                     <StyledTextLink text="Contacts" route="/contactUs" />
                     <StyledTextLink text="Cart" route="/shoppingCart" />
                     <StyledTextLink text="Services" route="/ToS" />
-                    <BrowserInfo />
                 </div>
             </div>
 
@@ -122,6 +121,7 @@ export const Nav = () => {
                     {isLoggedIn && <LoggedInMenu />}
                 </div>
             </div>
+            <BrowserInfo />
         </Box>
     );
 };

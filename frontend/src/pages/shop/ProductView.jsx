@@ -1,6 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Nav } from "../../components/nav/Nav";
+import { useParams, useNavigate } from "react-router-dom";
 import {
     Divider,
     List,
@@ -18,6 +17,8 @@ import { Review } from "../../components/shopView/Review";
 import { getReviews, getSingleProduct } from "../../services";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartAction } from "../shoppingCart/store/sliceReducer";
+import { setToast } from "../../components/container/store/sliceReducer";
+import { Container } from "../../components/container/Container";
 
 const Item = styled(Sheet)(({ theme }) => ({
     ...theme.typography.body2,
@@ -27,7 +28,7 @@ const Item = styled(Sheet)(({ theme }) => ({
 }));
 
 export const ProductView = () => {
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const [product, setProduct] = useState(null);
     const [reviews, setReviews] = useState(null);
     const [avgRating, setAvgRating] = useState(0);
@@ -38,15 +39,16 @@ export const ProductView = () => {
 
     let dispatch = useDispatch();
     let { productId } = useParams();
-    
 
     const addToShoppingCart = () => {
-        let payload = {
-            id: productId,
-            quantity: quantity,
-        };
+        dispatch(
+            addCartAction({
+                id: Number(productId),
+                quantity: quantity,
+            })
+        );
 
-        dispatch(addCartAction(payload));
+        dispatch(setToast(true));
     };
 
     useEffect(() => {
@@ -67,20 +69,14 @@ export const ProductView = () => {
                     setReviews(data);
                     setAvgRating(Number(avgData).toFixed(1));
                 }
-            })
+            });
         }
-    }, [reviews, setReviews, setAvgRating, productId])
+    }, [reviews, setReviews, setAvgRating, productId]);
 
     if (product) {
         return (
-            <>
-                <Nav />
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="center"
-                    sx={{ flexGrow: 1, paddingTop: "2em" }}
-                >
+            <Container>
+                <Grid container direction="row" justifyContent="center">
                     <Grid md={6}>
                         <Item>
                             <AspectRatio objectFit="contain" sx={{ my: 2 }}>
@@ -122,15 +118,15 @@ export const ProductView = () => {
                             </div>
                             <div className="actions">
                                 <Select
-                                    defaultValue="1"
+                                    defaultValue={quantity}
                                     sx={{ maxWidth: "4em", mt: "1em" }}
                                     onChange={(e, value) => setQuantity(value)}
                                 >
-                                    <Option value="1">1</Option>
-                                    <Option value="2">2</Option>
-                                    <Option value="3">3</Option>
-                                    <Option value="4">4</Option>
-                                    <Option value="5">5</Option>
+                                    <Option value={1}>1</Option>
+                                    <Option value={2}>2</Option>
+                                    <Option value={3}>3</Option>
+                                    <Option value={4}>4</Option>
+                                    <Option value={5}>5</Option>
                                 </Select>
                                 <Box
                                     sx={{
@@ -139,12 +135,29 @@ export const ProductView = () => {
                                         flexDirection: "column",
                                         paddingTop: "2em",
                                     }}
+                                >
+                                    <Button
+                                        sx={{ maxWidth: "200px" }}
+                                        onClick={() => addToShoppingCart()}
                                     >
-                                    <Button sx={{maxWidth: "200px"}} onClick={() => addToShoppingCart()}>Add to cart</Button>
+                                        Add to cart
+                                    </Button>
                                     {isLoggedIn && (
-                                        <Button sx={{maxWidth: "200px", mt: "1em"}} onClick={() => navigate(`/reviewForm/${productId}`)}>Write a review</Button>
+                                        <Button
+                                            sx={{
+                                                maxWidth: "200px",
+                                                mt: "1em",
+                                            }}
+                                            onClick={() =>
+                                                navigate(
+                                                    `/reviewForm/${productId}`
+                                                )
+                                            }
+                                        >
+                                            Write a review
+                                        </Button>
                                     )}
-                                    </Box>
+                                </Box>
                             </div>
                         </Item>
                     </Grid>
@@ -154,9 +167,10 @@ export const ProductView = () => {
                     <Grid md={10}>
                         <Item>
                             <Typography level="h5">
-                                Total Reviews:{" "}
-                                {reviews && reviews.length}
-                                {reviews && reviews.length > 0 ? ` | Average Rating: ${avgRating}` : ''}
+                                Total Reviews: {reviews && reviews.length}
+                                {reviews && reviews.length > 0
+                                    ? ` | Average Rating: ${avgRating}`
+                                    : ""}
                             </Typography>
                             <Divider />
                             <List orientation="vertical">
@@ -176,7 +190,7 @@ export const ProductView = () => {
                     </Grid>
                     <Grid md />
                 </Grid>
-            </>
+            </Container>
         );
     } else {
         return <></>;
