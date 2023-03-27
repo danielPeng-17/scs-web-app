@@ -7,7 +7,7 @@ import { ShoppingCartOutlined } from "@mui/icons-material";
 import { ItemCard } from "./ItemCard";
 import { getProducts } from "../../services";
 import { addCartAction } from "../../pages/shoppingCart/store/sliceReducer";
-
+import { setToast } from "../container/store/sliceReducer";
 
 export const Catalog = () => {
     const dispatch = useDispatch();
@@ -28,6 +28,8 @@ export const Catalog = () => {
                 quantity: 1,
             })
         );
+
+        dispatch(setToast(true));
     };
 
     const handleDragOver = (e) => {
@@ -54,19 +56,15 @@ export const Catalog = () => {
                     orientation="horizontal"
                 >
                     {products &&
-                        products.map((item) => {
-                            return (
-                                <div
-                                    key={item.id}
-                                    draggable="true"
-                                    onDragStart={(e) =>
-                                        handleDragStart(e, item.id)
-                                    }
-                                >
-                                    <ItemCard item={item} />
-                                </div>
-                            );
-                        })}
+                        products.map((item) => (
+                            <div
+                                key={item.id}
+                                draggable="true"
+                                onDragStart={(e) => handleDragStart(e, item.id)}
+                            >
+                                <ItemCard item={item} />
+                            </div>
+                        ))}
                 </List>
             </Box>
             <div

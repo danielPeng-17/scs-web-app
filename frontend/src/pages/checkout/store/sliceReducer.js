@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     success: false,
     data: null,
+    trucks: null,
     errorMessage: null,
     errorCode: null,
     loading: false,
@@ -12,7 +13,7 @@ const checkoutSlice = createSlice({
     name: "checkout",
     initialState,
     reducers: {
-        checkoutAction: (draft, _payload) => {
+        checkoutAction: (draft, _action) => {
             draft.loading = true;
         },
         checkoutSuccessAction: (draft, action) => {
@@ -31,10 +32,27 @@ const checkoutSlice = createSlice({
             draft.errorMessage = action.payload.errorMessage;
             draft.errorCode = action.payload.errorCode;
         },
+        fetchTruckAction: (draft) => {
+            draft.loading = true;
+        },
+        fetchTruckSuccessAction: (draft, action) => {
+            draft.loading = false;
+            draft.trucks = action.payload;
+        },
+        fetchTruckFailAction: (draft) => {
+            draft.loading = false;
+            draft.trucks = null;
+        },
     },
 });
 
-export const { checkoutAction, checkoutSuccessAction, checkoutFailAction } =
-    checkoutSlice.actions;
+export const {
+    checkoutAction,
+    checkoutSuccessAction,
+    checkoutFailAction,
+    fetchTruckAction,
+    fetchTruckSuccessAction,
+    fetchTruckFailAction,
+} = checkoutSlice.actions;
 
 export default checkoutSlice.reducer;

@@ -47,7 +47,7 @@ export const addReview = async (payload) => {
 
 // fetch geolocation
 export const getLocation = async (payload) => {
-    const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${payload.address}&key=${payload.apikey}`);
+    const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${payload.address}&key=${payload.apiKey}`);
     return res;
 }
 
@@ -65,7 +65,13 @@ export const postOrder = async (payload) => {
     return res;
 }
 
+// post to run admin query 
 export const postAdminQuery = async (payload) => {
     const res = await axios.post(`${baseURL}/admin.php`, payload);
     return res;
 }
+// fetch truck data
+export const getTruck = async () => {
+    const res = await axios.get(`${baseURL}/truck.php`);
+    return res;
+} 

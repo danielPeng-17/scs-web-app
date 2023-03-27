@@ -6,4 +6,4 @@ export const formatPhoneNumber = (number) => {
 };
 
 export const roundNumberToTwoDeciamls = (num) =>
-    Math.round((num + Number.EPSILON) * 100) / 100;
+    (Math.round((num + Number.EPSILON) * 100) / 100).toFixed(2);

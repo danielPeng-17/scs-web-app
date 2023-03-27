@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography, Grid, Button, Alert, Table, Divider } from "@mui/joy";
 import { ShoppingCartCheckoutOutlined } from "@mui/icons-material";
@@ -20,20 +20,20 @@ export const ShoppingCart = () => {
 
     const [shoppingCart, setShoppingCart] = useState(null);
 
-    const getCartItem = (id) =>
-        state.items.find((item) => item.id === id) ?? null;
+    const total = useMemo(() => {
+        const getCartItem = (id) =>
+            state.items.find((item) => item.id === id) ?? null;
 
-    const total =
-        shoppingCart && shoppingCart.length > 1 && state.items.length > 0
-            ? shoppingCart.reduce((a, b) => {
-                  console.log(getCartItem(b.id));
-                  return (
-                      a + Number(b.price) * (getCartItem(b.id)?.quantity ?? 0)
-                  );
-              }, 0)
+        return shoppingCart && state.items.length > 0
+            ? shoppingCart.reduce(
+                  (acc, item) =>
+                      acc +
+                      Number(item.price) *
+                          (getCartItem(item.id)?.quantity ?? 0),
+                  0
+              )
             : 0;
-
-    console.log("in here", total, getCartItem(1));
+    }, [shoppingCart, state.items]);
 
     useEffect(() => {
         if (shoppingCart == null && state.items.length > 0) {
@@ -84,6 +84,21 @@ export const ShoppingCart = () => {
                         </tbody>
                     </Table>
                     <Divider />
+                    <Alert color="warning" sx={{ mt: 2 }}>
+                        Limited time only: Free shipping for subtotals over
+                        $1000.00 & checkout with code:{" "}
+                        <code
+                            style={{
+                                margin: "0 8px",
+                                backgroundColor: "lightgray",
+                                padding: "2px 6px",
+                                borderRadius: "6px",
+                            }}
+                        >
+                            SCS
+                        </code>{" "}
+                        to get an additional $200 off!
+                    </Alert>
                     <div style={{ display: "flex", justifyContent: "right" }}>
                         <Grid container direction="column" sx={{ mt: "2em" }}>
                             <div
@@ -94,7 +109,7 @@ export const ShoppingCart = () => {
                                 }}
                             >
                                 <Typography level="h4">
-                                    Total: ${roundNumberToTwoDeciamls(total)}
+                                    Subtotal: ${roundNumberToTwoDeciamls(total)}
                                 </Typography>
                             </div>
                             {!isLoggedIn && (
