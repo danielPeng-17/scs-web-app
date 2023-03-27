@@ -64,7 +64,7 @@ export const LoggedInMenu = () => {
                     </MenuItem>
                 ) : null}
                 <MenuItem onClick={handleClose}>
-                    <Link>Profile</Link>
+                    <Link to="/profile">Profile</Link>
                 </MenuItem>
                 <MenuItem
                     onClick={() => {

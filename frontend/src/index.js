@@ -22,6 +22,7 @@ import { DBMaintain } from './pages/dbMaintain/DBMaintain';
 import { Checkout } from './pages/checkout/Checkout';
 import { OrderConfirmation } from './pages/orderConfirmation/OrderConfirmation';
 import { ReviewForm } from './pages/shop/ReviewForm';
+import { Profile } from './pages/profile/Profile';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
   {
     path: "/reviewForm/:productId",
     element: <ReviewForm />
+  },
+  {
+    path: '/profile',
+    element: <Profile />
   }
 ]);
 
