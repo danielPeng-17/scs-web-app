@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
 import { Search } from "@mui/icons-material";
-import { getOrder } from "../../../services";
+import { getOrderWithIds } from "../../../services";
 
 const SearchBar = ({ onSearch }) => {
   const [open, setOpen] = useState(false);
@@ -15,7 +15,7 @@ const SearchBar = ({ onSearch }) => {
     const fetchOrder = async () => {
       if (userId && id) {
         try {
-          const result = await getOrder({ userId, id });
+          const result = await getOrderWithIds({ userId, id });
           setOrder(result);
         } catch (error) {
           // If there is an error while fetching the order, log the error to the console and display an error message to the user
@@ -41,7 +41,7 @@ const SearchBar = ({ onSearch }) => {
       setSuccess("Order DONE");
     } else {
       try {
-        const result = await getOrder({ userId, id });
+        const result = await getOrderWithIds({ userId, id });
         setOrder(result);
         if (result.userId === userId && result.id === id) {
           onSearch({ userId, id });
