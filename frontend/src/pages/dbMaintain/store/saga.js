@@ -1,13 +1,12 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
+import { postAdminQuery } from "../../../services";
 import { queryAction, queryFailAction, querySuccessAction } from "./sliceReducer";
 
 function* querySaga(action) {
     try {
-        // TODO: add api call to backend for the query data
-        const res = yield call(() => {}, action.payload.query);
-
-        if (res.data) {
-            yield put(querySuccessAction(res.data));
+        const res = yield call(postAdminQuery, action.payload);
+        if (res.data.success) {
+            yield put(querySuccessAction(res.data.response));
         } else {
             yield put(queryFailAction());
         }

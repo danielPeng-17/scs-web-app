@@ -7,7 +7,7 @@ import { SelectOperator } from "./select/SelectOperator";
 import { InsertOperator } from "./insert/InsertOperator";
 import { UpdateOperator } from "./update/UpdateOperator";
 import { DeleteOperator } from "./delete/DeleteOperator";
-import { queryAction } from "./store/sliceReducer";
+import { queryAction, clearResponseAction } from "./store/sliceReducer";
 
 export const DBMaintain = () => {
     const dispatch = useDispatch();
@@ -23,23 +23,22 @@ export const DBMaintain = () => {
     const onSubmitQuery = () => {
         let query = "";
         if (operator === "select") {
-            query = `SELECT ${columnIdentifier} FROM ${tableIdentifier} ${
+            query = `SELECT ${columnIdentifier} FROM scs.${tableIdentifier} ${
                 whereIdentifier !== "" ? `WHERE ${whereIdentifier}` : ""
             };`;
         } else if (operator === "update") {
-            query = `UPDATE ${tableIdentifier} SET ${updateIdentifier}
+            query = `UPDATE scs.${tableIdentifier} SET ${updateIdentifier}
                 WHERE ${whereIdentifier};`;
         } else if (operator === "insert") {
-            query = `INSERT INTO ${tableIdentifier} (${columnIdentifier})
+            query = `INSERT INTO scs.${tableIdentifier} (${columnIdentifier})
                 VALUES (${valuesIdentifier});`;
         } else if (operator === 'delete') {
-            query = `DELETE FROM ${tableIdentifier} WHERE ${whereIdentifier};`;
+            query = `DELETE FROM scs.${tableIdentifier} WHERE ${whereIdentifier};`;
         } else {
             query = "";
         }
-
         if (query !== "") {
-            dispatch(queryAction({query}));
+            dispatch(queryAction({query, type: operator}));
         }
     };
 
@@ -52,8 +51,8 @@ export const DBMaintain = () => {
                     placeholder="Select an option"
                     onChange={(e, value) => {
                         e.preventDefault();
-
                         setOperator(value);
+                        dispatch(clearResponseAction());
                     }}
                 >
                     <Option value="select">SELECT</Option>
@@ -95,8 +94,16 @@ export const DBMaintain = () => {
                 <Button onClick={() => onSubmitQuery()}>Run Query</Button>
             </div>
             <div>
-                {state.data ?
-                    <>Map over query data here</>
+                {state.response && operator === 'select' ?
+                        state.response.map((item) =>{
+                            return(<pre key={item.id}>  {JSON.stringify(item)} </pre>);
+                        })
+                    :
+                    null
+                }
+                {
+                    state.response && operator !== 'select' ?
+                        <pre> {state.response}</pre>
                     :
                     null
                 }
