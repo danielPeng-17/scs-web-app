@@ -69,7 +69,12 @@ const SearchBar = () => {
             <p style={{ color: "red", marginTop: "16px" }}>{error}</p>
           )}
           {success && (
-            <p style={{ color: "green", marginTop: "16px" }}>{success}</p>
+            <>
+              <p style={{ color: "green", marginTop: "16px" }}>{success}</p>
+              <p>Date Issued: {order.dateIssued}</p>
+              <p>Date Received: {order.dateReceived}</p>
+              <p>Total Price: {order.totalPrice}</p>
+            </>
           )}
         </DialogContent>
         <DialogActions>
