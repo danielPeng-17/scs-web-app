@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     $sql = "SELECT * FROM orders WHERE userId = '$userId' AND id = '$id'";
     $result = $conn->query($sql);
-
+    
     if ($result->num_rows > 0) {
       $row = $result->fetch_assoc();
       $order = array(
