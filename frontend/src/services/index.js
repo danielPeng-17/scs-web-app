@@ -45,14 +45,6 @@ export const addReview = async (payload) => {
     return res;
 }
 
-// fetch geolocation
-export const getLocation = async (payload) => {
-    const res = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${payload.address}&key=${payload.apiKey}`);
-    return res;
-}
-
-// orders
-
 // fetch order
 export const getOrder = async (payload) => {
     const res = await axios.get(`${baseURL}/orders.php`, payload);

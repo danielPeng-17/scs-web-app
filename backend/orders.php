@@ -46,6 +46,12 @@
          // DO NOT ALLOW USERS TO CHECKOUT WITHOUT AN ACCOUNT...
          // I DON'T WANT TO DEAL WITH THE EDGE CASE...
          if ($userId != "" && $userId != null) {
+            $sql = "SELECT salt FROM scs.users WHERE id='". $userId ."';";
+            $result = $pdo->query($sql);
+            $salt = $result->fetch()["salt"];
+
+            $hashedCardNo = md5($cardNo . $salt);
+
             $paymentExistsSql = "SELECT IF(EXISTS(SELECT * FROM scs.payment WHERE cardName='".$cardName."' AND cardNumber='".$cardNo."' AND cardExpiration='".$cardExp."' AND cardCVV='".$cardCVV."'),1,0) AS result;";
             $result = $pdo->query($paymentExistsSql);
             $paymentExistsResult = $result->fetch();
@@ -56,7 +62,7 @@
                $sql .= "VALUES (:cname, :cno, :cexp, :ccvv, :ba, :bcity, :bpc, :bprov, :bcountry);";
                $statement = $pdo->prepare($sql);
                $statement->bindValue(":cname", $cardName);
-               $statement->bindValue(":cno", $cardNo);
+               $statement->bindValue(":cno", $hashedCardNo);
                $statement->bindValue(":cexp", $cardExp);
                $statement->bindValue(":ccvv", $cardCVV);
                $statement->bindValue(":ba", $billingAddress);
@@ -68,7 +74,7 @@
             }
 
             // fetch id of new payment data -> id's are auto generated on db level
-            $sql = "SELECT id FROM scs.payment WHERE cardName='".$cardName."' AND cardNumber='".$cardNo."' AND cardExpiration='".$cardExp."' AND cardCVV='".$cardCVV."';";
+            $sql = "SELECT id FROM scs.payment WHERE cardName='".$cardName."' AND cardNumber='".$hashedCardNo."' AND cardExpiration='".$cardExp."' AND cardCVV='".$cardCVV."';";
             $result = $pdo->query($sql);
             $paymentIdResult = $result->fetch();
             $paymentId = $paymentIdResult["id"];
@@ -89,9 +95,7 @@
             // TODO: update distance from null to an actual value from google matrix api
             $statement->bindValue(":dist", null);
             $statement->bindValue(":tid", $truckId);
-            // randomly multiply truck shipping fee by 1.13 -> maybe there was seller handling fee or carbon tax?
-            $roundedTotalShippingCost = round($truckShippingFee * 1.13, 2);
-            $statement->bindValue(":tsc", $roundedTotalShippingCost);
+            $statement->bindValue(":tsc", $truckShippingFee);
             $statement->execute();
 
             // fetch trip id
@@ -109,9 +113,7 @@
             $statement->bindValue(":pid", $paymentId);
             $statement->bindValue(":di", $dateIssued);
             $statement->bindValue(":dr", $dateReceived);
-            $total = $totalPrice + $totalShippingCost;
-            $roundedTotal = round($total, 2);
-            $statement->bindValue(":tp", $roundedTotal);
+            $statement->bindValue(":tp", $totalPrice);
             $statement->bindValue(":tid", $tripId);
             $statement->execute();
 
@@ -127,7 +129,8 @@
                "success" => true,
                "orderId" => $orderId,
                "totalPrice" => $orderTotalPrice,
-               "dateReceived" => $orderDateReceived
+               "dateReceived" => $orderDateReceived,
+               "destination" => $destination
             );
             echo json_encode($res);
          } else {
