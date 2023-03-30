@@ -36,7 +36,10 @@
          }
 
          if (!$isValuesNullOrEmptyString) {
-            $sql = "INSERT INTO scs.users (firstName, lastName, email, telNo, address, city, province, country, postalCode, password, balance, isAdmin) VALUES (:fn, :ln, :email, :tn, :addr, :city, :prov, :co, :pc, :pass, :bal, :ia);";
+            $salt = bin2hex(random_bytes(16));
+            $hashedPassword = md5($password . $salt);
+
+            $sql = "INSERT INTO scs.users (firstName, lastName, email, telNo, address, city, province, country, postalCode, password, salt, balance, isAdmin) VALUES (:fn, :ln, :email, :tn, :addr, :city, :prov, :co, :pc, :pass, :salt, :bal, :ia);";
             $statement = $pdo->prepare($sql);
             $statement->bindValue(":fn", $firstName);
             $statement->bindValue(":ln", $lastName);
@@ -47,7 +50,8 @@
             $statement->bindValue(":prov", $province);
             $statement->bindValue(":co", $country);
             $statement->bindValue(":pc", $postalCode);
-            $statement->bindValue(":pass", $password);
+            $statement->bindValue(":pass", $hashedPassword);
+            $statement->bindValue(":salt", $salt);
             $statement->bindValue(":bal", $balance);
             $statement->bindValue(':ia', 0);
             $statement->execute();

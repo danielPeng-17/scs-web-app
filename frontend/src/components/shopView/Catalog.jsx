@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { IconButton, List, Box } from "@mui/joy";
+import { IconButton, Box, Sheet } from "@mui/joy";
 import { ShoppingCartOutlined } from "@mui/icons-material";
 
 import { ItemCard } from "./ItemCard";
@@ -48,12 +48,14 @@ export const Catalog = () => {
     return (
         <div style={{ position: "relative" }}>
             <Box sx={{ flexGrow: 1 }}>
-                <List
+                <Sheet
                     sx={{
-                        "--ListItem-paddingX": "14px",
-                        "--ListItem-paddingY": "12px",
+                        mt: 4,
+                        display: "grid",
+                        gridColumnGap: "12px",
+                        gridRowGap: '32px',
+                        gridTemplateColumns: "repeat(auto-fill, minmax(356px, 1fr))",
                     }}
-                    orientation="horizontal"
                 >
                     {products &&
                         products.map((item) => (
@@ -61,11 +63,12 @@ export const Catalog = () => {
                                 key={item.id}
                                 draggable="true"
                                 onDragStart={(e) => handleDragStart(e, item.id)}
+                                style={{ width: 'fit-content' }}
                             >
                                 <ItemCard item={item} />
                             </div>
                         ))}
-                </List>
+                </Sheet>
             </Box>
             <div
                 style={{ position: "fixed", bottom: "20px", right: "20px" }}

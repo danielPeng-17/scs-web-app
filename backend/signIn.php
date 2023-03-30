@@ -16,7 +16,6 @@
          $email = $obj->email;
          $password = $obj->password;
 
-
          $isValuesNullOrEmptyString = false;
          $arr = array($email, $password);
 
@@ -28,7 +27,13 @@
          }
 
          if (!$isValuesNullOrEmptyString) {
-            $sql = "SELECT * FROM scs.users WHERE email='" . $email . "' AND password='" . $password . "'";
+            $sql = "SELECT salt FROM scs.users WHERE email='" . $email . "';";
+            $result = $pdo->query($sql);
+            $salt = $result->fetch()["salt"];
+
+            $hashedPassword = md5($password . $salt);
+
+            $sql = "SELECT * FROM scs.users WHERE email='" . $email . "' AND password='" . $hashedPassword . "';";
             $result = $pdo->query($sql);
             $user = $result->fetch();
 
